@@ -1,0 +1,45 @@
+<div class="nav-bar" id="header">
+    <div class="nav-bar-inner padding10">
+        <a href="http://www.54cms.com"><img class="place-left" src="/mpublic/imgs/54cms_logo.png"/></a>
+        <span class="element brand"><%= SITE.NAME %> -- <%= SITE.DESCRIPTION %></span>
+        <a class="button bg-color-greenLight fg-color-white place-right" href="/<%= CONST.SYSTEM.MPATH %>/logout"><%=AUTH.BUTTON.LOGOUT%></a>
+        <a class="button bg-color-greenLight fg-color-white place-right" href="javascript:btnCPWDClick();"><%=AUTH.BUTTON.CHANGEPWD%></a>
+        <span class="element brand place-right"><%= SITE.WELCOME %><%= USERINFO.departmenttext %> -- <%= USERINFO.realname %></span>
+    </div>
+    <script>
+        function btnCPWDClick(i){
+            $.Zebra_Dialog('<form id="formcpwd"><div class="input-control password" ><input type="password" id="oldpwd" name="oldpwd" placeholder="<%= AUTH.TIP.OLDPWD %>" VTypes="label:<%= AUTH.TIP.OLDPWD %>;required:true;tip:errtip_a"><button class="helper" tabindex="-1" type="button"></button><span id="errtip_a"></span></div><div class="input-control password"><input type="password" id="newpwd" name="newpwd" placeholder="<%= AUTH.TIP.NEWPWD %>" VTypes="label:<%= AUTH.TIP.NEWPWD %>;required:true;tip:errtip_p"><button class="helper" tabindex="-1" type="button"></button><span id="errtip_p"></span></div></form>', {
+                'width': '400',
+                'auto_close':false,
+                'overlay_close':false,
+                'type':false,
+                'modal':true,
+                'show_close_button':false,
+                'title':'<%=AUTH.BUTTON.CHANGEPWD%>',
+                'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                    {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                        if ($('#formcpwd').checkFormEx()) {
+                            $.ajax({
+                                url:"/<%= CONST.SYSTEM.MPATH %>/cpwd",
+                                type:'POST',
+                                data: {"oldpwd": $('#oldpwd').val(),"newpwd": $('#newpwd').val()},
+                                dataType:"json",
+                                success:function(data) {
+                                    if (data.success){
+                                        loadArticle(data['url'], data['isRedirect']);
+                                    } else {
+                                        $('#errtip_p')[0].innerHTML = data['tip'];
+                                    }
+                                }
+                            });
+                            return false;
+                        }else{
+                            return false;
+                        }
+                    }}]
+            });
+            $(function(){$()["Input"]({initAll: true});});
+            $('#formcpwd').checkForm();
+        }
+    </script>
+</div>

@@ -1,0 +1,89 @@
+<%- include header %>
+<header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url(/<%=CONST.SYSTEM.THEME%>/images/bg01.jpg);">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc">
+							<h1 class="animate-box" data-animate-effect="fadeInUp">新闻资讯</h1>
+							<h2 class="animate-box" data-animate-effect="fadeInUp">News Center</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+<div class="gtco-section">
+  <div class="gtco-container">
+    <div class="row">
+      <div id="main_left" class="col-xs-12 col-sm-3 col-md-3">
+          <h3>新闻资讯</h3>
+          <ul>
+<%
+for (i=0; i<CUSTOM.CHANNEL.length; i++){
+   var c = "menu0"+i;
+   if (CUSTOM.CHANNEL[i].key === CUSTOM.CURRENTC){
+       c = "one"
+       ct=CUSTOM.CHANNEL[i].name;
+   }
+%>
+<li id="<%=c%>"><a href="<%=CUSTOM.CHANNEL[i].stype==="2"?CUSTOM.CHANNEL[i].key:"/channel/"+CUSTOM.CHANNEL[i].parentkey+"/"+CUSTOM.CHANNEL[i].key%>"><%=CUSTOM.CHANNEL[i].name%></a></li>
+<%}%>
+          </ul>
+        </div>
+      <div class="nr_box03 col-xs-12 col-sm-9 col-md-9">
+        <h3><%=ct%></h3>
+        <div class="news_box">
+          <ul>     
+
+            <% for(var i=0; i<pageCount; i++) {%>
+            <li class="news_nr">
+              <div class="news_t">
+                <div class="news_t1">
+                  <a href="/article/<%=smal[i].atype%>/<%=smal[i]._id%>"><%=smal[i].title%></a><span><%=smal[i].pdate%></span></div>
+                <div class="news_t2">
+                  <%=smal[i].description%>
+                                                                       
+                </div>
+              </div>
+            </li>
+            <% } %>
+
+          </ul>
+        </div>
+        <div class="yema_box">
+                <% if(!isFirstPage){ %>
+                     <a href="javascript:listload(parseInt($('#pn').val())-1);" style="clear:both;float: none;">上一页</a>
+                <% } %>
+                <%- footinfo%>
+                <% if(!isLastPage){ %>
+                     <a href="javascript:listload(parseInt($('#pn').val())+1);" style="clear:both;float: none;">下一页</a>
+                <% } %>
+        </div>        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <script>
+        var pc = 10;
+        var pages=<%=pages%>;
+        var pageCount=<%=pageCount%>;
+        function listload(pn) {
+            window.location.href = '<%= surl %>' + pn;
+        }
+        $(document).ready(function () {
+            $('#pn').bind('keypress',function(event){
+                if(event.keyCode == "13"){
+                    if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                        listload($('#pn').val());
+                    }
+                }
+            });
+        });
+    </script>
+<%- include footer %>

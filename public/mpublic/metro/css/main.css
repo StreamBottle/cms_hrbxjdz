@@ -1,0 +1,150 @@
+html, body, address, blockquote, div, dl, form, h1, h2, h3, h4, h5, h6, ol, p, pre, table, ul, dd, dt, li,
+tbody, td, tfoot, th, thead, tr, button, del, ins, map, object, a, abbr, acronym, b, bdo, big, br, cite,
+code, dfn, em, i, img, kbd, q, samp, small, span, strong, sub, sup, tt, var, legend, fieldset {margin: 0;padding: 0;}
+img, fieldset {border: 0;}
+html, body {height: 100%;line-height:1.6;min-width: 320px;background: #ecf0f1;
+color: #333;font-family: "Lato", sans-serif;font-size: 14px;
+font-family:"Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma;}
+input,textarea,button,a{outline:0}
+a:hover{text-decoration:none;}
+a{text-decoration:none;}
+form{display:inline;}
+/*登录---开始*/
+.login_body{background: url(../imgs/bg05.jpg) no-repeat;background-position:center;}
+.login-panel{position:absolute;top:50%;left:50%;width:600px;margin-top:-150px;margin-left:-350px;}
+.dlogo{border-right: 1px solid rgba(0,0,0,0.1);min-height: 160px!important;max-width: 200px;margin-top:20px;float:left;}
+.dlogo img{width:100px;border:1px solid rgba(0,0,0,0.1);margin:30px 30px 0 30px;}
+.dlogin{float:left;margin:50px 0 0 30px;width:300px;display: block;}
+#login-form .icon-wrapper{clear:both;width: 40px;float: left;height: 32px;border-bottom: 1px #bababa solid;border-top: 1px #bababa solid;border-left: 1px #bababa solid;background-color: #eee;text-align: center;padding-top: 5px;}
+#login-form .input-control{width:260px;float:left;}
+#login_button{float:right;margin-right: 0px;font-size:16px;padding-top:5px;}
+.login-footer{color: #f0f0f0;line-height: 2.7;position:absolute;bottom:50px;right:150px;font-size:12px;}
+.login-footer a{color: #f0f0f0;font-size:12px;}
+.login-footer a:hover{color: #f0f0f0;}
+.derror{clear: both;color:red;}
+/*登录---结束*/
+/*框架---开始*/
+#header{background-color:#00aeef;position: fixed;_position: absolute;}
+#nav{position: fixed;_position: absolute;top:50px;margin:0 auto;background-color:#f05033;min-height:0px !important;height:0px;float:left;}/* #9f00a7  #00a300 #F3F5F8*/
+#nav ul{background-color:#f05033;}
+#article{position: fixed;_position: absolute;top:50px;left:213px;background-color:#ecf0f1;min-height:0px !important;height:0px;float: right;border-left: 0px;padding:10px 10px 0 10px;}
+.page{min-height:0px !important;height:0px;}
+#footer{clear:both;position:fixed;_position:absolute;top:auto;bottom:0px;height:20px;background-color:#6f5499;}
+#footer .nav-bar-inner{text-align:center;color: #333;}
+#footer a{color: #333;}
+#footer a:hover{color: #333;}
+#article-header .butleft{clear:both;float:left;}
+#article-header .input-control{float:right;width:300px;}
+#article-content{clear:both;}
+.bordered thead tr{background-color:#00a300;}
+.bordered thead tr th{text-align:center;vertical-align:middle;color: #ffffff;padding-top: 5px;}
+.bordered tfoot tr{background-color:#b91d47;}
+.bordered tfoot tr td{text-align:center;vertical-align:middle;color: #ffffff;padding:5px 0 5px 0;}
+.thead_hide{display:none !important;}
+.sanpo-tgridhead{background-color: #00aeef;padding-left: 30px;color: #fff;}
+#btnCloseOverlay{color:#000000;margin: -4px 5px;}
+
+.dropdown-menuex {position: absolute;top: 100%;left: 0;z-index: 1000;display: none;float: left;min-width: 160px;padding: 5px 0;margin: 2px 0 0;font-size: 14px;list-style: none;background-color: #fff;border: 1px solid #ccc;border: 1px solid rgba(0, 0, 0, 0.15);}
+button, .button, #newobj .input-control{margin-bottom:0 !important;margin-right:0 !important;}
+.ui-multiselect{background-color:#FFF !important;border: 1px solid #BABABA;margin-bottom:0;width: 100%;}
+.ui-widget-content {border: 1px solid #BDC3C7;color: #333333;background-color: lightgray;}
+.ui-helper-reset {border: 0 none;font-size: 100%;line-height: 1.3;list-style: none outside none;margin: 0;outline: 0 none;padding: 0;text-decoration: none;}
+.ui-multiselect-checkboxes {overflow-y: auto;position: relative;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {border: 1px solid #009999;color: #C77405;font-weight: bold;background-color:#00aeef;width:100%;margin-bottom:3px !important}
+.ui-multiselect-checkboxes label {border: 1px solid rgba(0, 0, 0, 0);cursor: default;display: block;padding: 3px 1px;}
+
+.ta-center{text-align: center;}
+.va-top{vertical-align:top;}
+.float-left{float: left !important;}
+.float-leftEx{clear:both;float: left !important;}
+.float-right{float: right !important;}
+.float-rightEx{clear:both;float: right !important;}
+.sanpo_overlay {position:fixed;_position:absolute;z-index: 10000;top: 0px;-moz-opacity: 0.6;opacity:.60;filter: alpha(opacity=60);left: 0px;height:100%;width:100%;background: #000;display: none;}
+.sanpo_dialog{position:fixed;_position:absolute;opacity:1;z-index:11000;left:50%;top:50%;display: none;background:#FFFFFF;border:2px solid #6699CC;}
+.div_title{clear:none;text-align:center;}
+#btnSave{margin-top:15px;}
+#formcpwd .input-control input{margin-right:0px;}
+#formcreatefile .input-control input,#formcreatefile .input-control textarea{margin-right:0px;}
+.label_left{float:left;margin:5px 10px 0 10px;}
+.label_clear{clear:both;}
+.width_5{width:5%}
+.width_10{width:10%}
+.width_15{width:15%}
+.width_20{width:20%}
+.width_25{width:25%}
+.width_30{width:30%}
+.width_35{width:35%}
+.width_40{width:40%}
+.width_45{width:45%}
+.width_50{width:50%}
+.width_55{width:55%}
+.width_60{width:60%}
+.width_65{width:65%}
+.width_70{width:70%}
+.width_75{width:75%}
+.width_80{width:80%}
+.width_85{width:85%}
+.width_90{width:90%}
+.width_95{width:95%}
+.width_100{width:100%}
+.label_103{width:103px;clear:both;}
+.margin_left_0{margin-left:0px !important;}
+.margin_right_0{margin-right:0px !important;}
+.td_two{background-color: #f9f9f9 !important;}
+.td_one{background-color: #fff !important;}
+.table_td_label{width:72px;padding: 3px 4px;border-style:none;}
+.table_td_input{border-style:none;}
+/*框架---结束*/
+
+/*ZebraDialog BEGIN*/
+/*.ZebraDialog *,.ZebraDialog *:after,.ZebraDialog *:before  { -moz-box-sizing: content-box !important; -webkit-box-sizing: content-box !important; box-sizing: content-box !important }*/
+.ZebraDialog {width: 350px;z-index: 1001;}
+.ZebraDialog,.ZebraDialog .ZebraDialog_Title,.ZebraDialog .ZebraDialog_Body,.ZebraDialog .ZebraDialog_Buttons a {margin: 0;padding: 0;font-family: Helvetica, Tahoma, Arial, sans-serif;font-size: 14px;text-align: left;}
+.ZebraDialog .ZebraDialog_Title,.ZebraDialog .ZebraDialog_BodyOuter,.ZebraDialog .ZebraDialog_Buttons {border-color: #13252F;border-width: 1px;}
+.ZebraDialog .ZebraDialog_Title {font-size: 16px;font-weight: bold;color: #F6F5F5;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);background: #444444;padding: 12px 15px;line-height: 1;}
+/*  set background color here and not on ZebraDialog_Body, or you'll eventually run into problems with rounded corners
+when using smaller widths for border! */
+.ZebraDialog .ZebraDialog_BodyOuter {background: #E7EDEF;}
+.ZebraDialog .ZebraDialog_Body {color: #44484A;padding: 10px;border-top-color: #000;border-bottom-color: #FFF;}
+.ZebraDialog .ZebraDialog_Buttons {background: #E7EDEF;padding: 5px;}
+.ZebraDialog .ZebraDialog_Buttons a {color: #FFF;padding: 5px 0px;border: 1px solid rgba(0, 0, 0, 0);vertical-align: middle;}
+.ZebraDialog .ZebraDialog_Buttons a:hover {color:inherit;}
+.ZebraDialogOverlay {background: #666;z-index: 1000;width:100%;height: 100%;}
+.ZebraDialog .ZebraDialog_Title {border-left-style: solid;border-top-style: solid;border-right-style: solid;}
+.ZebraDialog .ZebraDialog_BodyOuter {border-left-style: solid;border-right-style: solid;}
+.ZebraDialog .ZebraDialog_NoTitle {border-top-style: solid;}
+.ZebraDialog .ZebraDialog_NoButtons {border-bottom-style: solid;}
+.ZebraDialog .ZebraDialog_Body {border-top-width: 1px;border-top-style: solid;border-bottom-width: 2px;border-bottom-style: groove;overflow: auto;}
+.ZebraDialog .ZebraDialog_NoTitle .ZebraDialog_Body {border-top: none;}
+.ZebraDialog .ZebraDialog_NoButtons .ZebraDialog_Body {border-bottom: none;}
+.ZebraDialog .ZebraDialog_Icon {background-repeat: no-repeat;background-position: 20px 20px;min-height: 48px;_height: 85px;padding: 30px 0 30px 88px;}
+.ZebraDialog .ZebraDialog_Confirmation  { background-image: url('../imgs/confirmation.png') }
+.ZebraDialog .ZebraDialog_Error { background-image: url('../imgs/error.png') }
+.ZebraDialog .ZebraDialog_Information   { background-image: url('../imgs/information.png') }
+.ZebraDialog .ZebraDialog_Question  { background-image: url('../imgs/question.png') }
+.ZebraDialog .ZebraDialog_Warning   { background-image: url('../imgs/warning.png') }
+.ZebraDialog .ZebraDialog_Buttons {border-left-style: solid;border-right-style: solid;border-bottom-style: solid;}
+.ZebraDialog .ZebraDialog_Buttons a {white-space: nowrap;text-align: center;text-decoration: none;float: right;margin-right: 5px;min-width: 60px;_width: 60px;min-height:32px;height:32px;background-color: #008287;border: 1px solid rgba(0, 0, 0, 0);vertical-align: middle;font-size: 9pt;}
+.ZebraDialog .ZebraDialog_Preloader {height: 32px;background: url('../imgs/preloader.gif') no-repeat center center;}
+/*ZebraDialog END*/
+/*treegrid BEGIN*/
+.treegrid_td{text-align: left;padding: 5px 10px;border-top: 1px solid #e5e5e5;}
+.treegrid_header{background-color:#E0E0E0}
+.treegrid_button{min-width: 40px !important;}
+.treegrid-indent {width:16px; height: 16px; display: inline-block; position: relative;}
+.treegrid-expander {width:16px; height: 16px; display: inline-block; position: relative; cursor: pointer;}
+.treegrid-expander-expanded{background-image: url(../imgs/collapse.png); }
+.treegrid-expander-collapsed{background-image: url(../imgs/expand.png);}
+/*treegrid END*/
+/*uploadifive BEGIN*/
+#btnUpload{float:right;margin-right:3px !important;}
+#uploadifive-btnSelect{float:right;margin-right:3px;}
+#filequeue {border: 1px solid #A3A3A3;height: 177px;overflow: auto;margin-bottom: 10px;padding: 0 3px 3px;width: 377px;}
+.uploadifive-button {background-color: #008287;background-position: center top;background-repeat: no-repeat;color: #FFF;font: 12px Arial, Helvetica, sans-serif;text-align: center;}
+.uploadifive-button:hover {color: inherit;background-position: center bottom;}
+.uploadifive-queue-item {background-color: #F5F5F5;border-bottom: 1px dotted #D5D5D5;font: 12px Arial, Helvetica, Sans-serif;margin-top: 3px;padding: 15px;}
+.uploadifive-queue-item .close {background: url('../../uploadifive/uploadifive-cancel.png') 0 0 no-repeat;display: block;float: right;height: 16px;text-indent: -9999px;width: 16px;}
+.uploadifive-queue-item .progress {border: 1px solid #D0D0D0;height: 3px;margin-top: 5px;width: 100%;}
+.uploadifive-queue-item .progress-bar {background-color: #0072BC;height: 3px;width: 0;}
+/*uploadifive END*/
+

@@ -1,0 +1,42 @@
+<%- include header %>
+<style>
+.gtco-heading h2 {
+    font-size: 26px;
+}
+.gtco-heading p {
+    font-size: 18px;
+}
+</style>
+	<header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url(/<%=CONST.SYSTEM.THEME%>/images/bg01.jpg);">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc">
+							<h1 class="animate-box" data-animate-effect="fadeInUp">新闻资讯</h1>
+							<h2 class="animate-box" data-animate-effect="fadeInUp">News Center</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+    <div class="gtco-section border-bottom animate-box fadeInUp animated-fast" id="gtco-history">
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                    <h2><span><%=ARTICLE.title%></h2>
+                    <p><span>信息来源：<%=ARTICLE.author%></span>&nbsp;&nbsp;&nbsp;&nbsp;<span>时间：<%=ARTICLE.pdate%></span></p>
+                </div>
+            </div>
+
+            <div class="row row-pb-md">
+                <div class="col-md-12">
+                    <%-ARTICLE.acontent%>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<%- include footer %>

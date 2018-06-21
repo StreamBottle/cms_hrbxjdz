@@ -1,0 +1,46 @@
+<%- include header %>
+	<header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url(/<%=CONST.SYSTEM.THEME%>/images/bg01.jpg);">
+		<div class="overlay"></div>
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc">
+							<h1 class="animate-box" data-animate-effect="fadeInUp">服务体系</h1>
+							<h2 class="animate-box" data-animate-effect="fadeInUp">Service System</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
+				<div id="main_left" class="col-xs-12 col-sm-3 col-md-3">
+			      <h3>服务体系</h3>
+			      <ul>
+			      <%
+					for (i=0; i<CUSTOM.CHANNEL.length; i++){
+					   var c = "menu0"+i;
+					   if (CUSTOM.CHANNEL[i].key === CUSTOM.CURRENTC){
+					       c = "one"
+					       ct=CUSTOM.CHANNEL[i].name;
+					   }
+					%>
+					<li id="<%=c%>"><a href="<%=CUSTOM.CHANNEL[i].stype==="2"?CUSTOM.CHANNEL[i].key:"/channel/"+CUSTOM.CHANNEL[i].parentkey+"/"+CUSTOM.CHANNEL[i].key%>"><%=CUSTOM.CHANNEL[i].name%></a></li>
+					<%}%>
+			      </ul>
+			    </div>
+				<div class="nr_box03 col-xs-12 col-sm-9 col-md-9">
+					<h3><%=ct%></h3>
+					<div class="news_box">
+					<%-smac[0].acontent%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<%- include footer %>

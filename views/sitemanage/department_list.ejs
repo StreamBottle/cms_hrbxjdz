@@ -1,0 +1,147 @@
+<form action='/<%= CONST.SYSTEM.MPATH %>/departmentadd' method='post' id='formdepartment'>
+    <table class="bordered hovered" id="tdepartmentlist">
+        <thead>
+        <tr>
+            <th class="thead_hide"></th>
+            <th><%= DEPARTMENT.LABEL.NAME %></th>
+            <th><%= DEPARTMENT.LABEL.KEY %></th>
+            <th style="width:176px;"><%= COMMON.TITLE.OPERAT %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<pageCount; i++) {
+                if (i%2 == 0){%>
+        <tr class="td_one" id="tr<%=i%>">
+            <%}else{%>
+        <tr class="td_two" id="tr<%=i%>">
+            <%}%>
+            <td class="thead_hide" id="id<%=i%>"><%=smdl[i]._id%></td>
+            <td id="name<%=i%>"><%=smdl[i].name%></td>
+            <td id="key<%=i%>"><%=smdl[i].key%></td>
+            <td style="width:176px;">
+                <a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditClick('<%=i%>')"><%= COMMON.TITLE.EDIT %></a>
+                <a class="button default treegrid_button" href="javascript:btnDelClick('<%=i%>');"><%= COMMON.TITLE.DELETE %></a>
+            </td>
+        </tr>
+        <% } %>
+        <input type="hidden" name="opt" id="opt" value="1"/>
+        <input type="hidden" name="id" id="id" value=""/>
+        </tbody>
+        <tfoot>
+        <tr class="error">
+            <td  colspan="6" class="sanpo-tgridtd">
+                <% if(!isFirstPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())-1);"><%= COMMON.TITLE.PREVIOUS %></a>
+                <% } %>
+                <%- footinfo%>
+                <% if(!isLastPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())+1);"><%= COMMON.TITLE.NEXT %></a>
+                <% } %>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</form>
+<script>
+
+    var bshow = false;
+    var tobj;
+    var newobj;
+    var pages=<%=pages%>;
+    $(function () {
+        newobj = "<tr id='newobj'><td><div class='input-control text'><input id='name' name='name' type='text' placeholder='<%= DEPARTMENT.LABEL.NAME %>' VTypes='label:<%= DEPARTMENT.LABEL.NAME %>;required:true;tip:errtip_a'><button class='helper' tabindex='-1' type='button'></button><span class='fg-color-red' id='errtip_a'></span></div></td><td><div class='input-control text'><input id='key' name='key' type='text' placeholder='<%= DEPARTMENT.LABEL.KEY %>' VTypes='label:<%= DEPARTMENT.LABEL.KEY %>;required:true;tip:errtip_b'><button class='helper' tabindex='-1' type='button'></button><span class='fg-color-red' id='errtip_b'></span></div></td><td><a class='button default treegrid_button' style='margin-right: 10px !important;' href='javascript:btnSaveClick();'><%= COMMON.TITLE.SAVE %></a><a class='button default treegrid_button' href='javascript:btnCancelClick();'><%= COMMON.TITLE.CANCEL %></a></td></tr>";
+    })
+    $(document).ready(function () {
+        $('#pn').bind('keypress',function(event){
+            if(event.keyCode == "13"){
+                if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                    listload($('#findvalue').val(), $('#pn').val());
+                }
+            }
+        });
+        $('#btnAddDepartment').click(function(){
+            if (bshow){
+                btnCancelClick();
+            }
+            $("#opt").val("1");
+            bshow = true;
+            $('#opt').before(newobj);
+            $('#formdepartment').checkForm();
+        });
+    });
+    function btnManageClick(i){
+        loadArticle('/<%= CONST.SYSTEM.MPATH %>/departmentnew/'+$('#sdate'+i).text());
+    }
+    function btnEditClick(i){
+        if (bshow){
+            btnCancelClick();
+        }
+        tobj = $('#tr'+i);
+        var id = $('#id'+i).text();
+        var name = $('#name'+i).text();
+        var key = $('#key'+i).text();
+        $('#tr'+i).replaceWith(newobj);
+        bshow = true;
+        $('#id').val(id);
+        $("#opt").val("2");
+        $('#name').val(name);
+        $('#key').val(key);
+        $('#formdepartment').checkForm();
+    }
+    function btnDelClick(i){
+        var id = $('#id'+i).text();
+        var name = $('#name'+i).text();
+        $.Zebra_Dialog('<%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%>', {
+            'type': 'question'
+            ,'auto_close':false,'show_close_button':false,
+            'overlay_close':false,
+            'width': '400'
+            ,'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/departmentdel",
+                        type:'POST',
+                        data: {"did": id},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                loadArticle(data['url'], data['isRedirect']);
+                            } else {
+                                $('#err_tips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+                }}]
+        });
+    }
+    function btnCancelClick() {
+        bshow = false;
+        if ($("#opt").val()=="1"){
+            $('#newobj').remove();
+        }else{
+            $('#newobj').replaceWith(tobj);
+        }
+    }
+    function btnSaveClick() {
+        $('#formdepartment').submit();
+    }
+    $('#formdepartment').ajaxForm({
+        dataType: 'json'
+        ,beforeSubmit: beforesubmitopt
+        ,success: successopt
+    });
+    function beforesubmitopt() {
+        if ($('#formdepartment').checkFormEx()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function successopt(data) {
+        if (data['success']) {
+            loadArticle(data['url'], data['isRedirect']);
+        } else {
+            $('#err_tips')[0].innerHTML = data['tip'];
+        }
+    }
+</script>

@@ -1,0 +1,214 @@
+{
+    "SITE":{
+        "NAME":"哈尔滨新金电子",
+        "NEAMEN":"",
+        "DESCRIPTION":"系统管理",
+        "WELCOME":"您好：",
+        "COPYRIGHT":"<a href='http://www.jiuhangkeji.com'>54CMS</a> Copyright &copy; 2017 <a href='http://www.jiuhangkeji.com/'>久航科技</a> 版权所有"
+    },
+    "MENU":[
+        {
+        "LABEL":"系统管理",
+        "SUBMENU":[{
+            "LABEL":"系统设置",
+            "URL":"site"
+        },{
+            "LABEL":"部门管理",
+            "URL":"departmentlist"
+        },{
+            "LABEL":"角色管理",
+            "URL":"rolelist"
+        },{
+            "LABEL":"用户管理",
+            "URL":"userlist"
+        },{
+            "LABEL":"栏目管理",
+            "URL":"channel"
+        },{
+            "LABEL":"模板管理",
+            "URL":"template"
+        },{
+            "LABEL":"链接管理",
+            "URL":"linklist"
+        }]
+    },{
+        "LABEL":"信息管理",
+        "URL":"information"
+    }],
+    "COMMON":{
+        "TITLE":{
+            "ID": "ID",
+            "NAME": "名称",
+            "OPERAT": "操作",
+            "RETURN": "返回",
+            "REFRESH": "刷新",
+            "EDIT": "修改",
+            "Y": "是",
+            "N": "否",
+            "DELETE": "删除",
+            "MANAGE": "管理",
+            "SAVE": "保存",
+            "OK": "确定",
+            "CANCEL": "取消",
+            "PREVIOUS":"上一页",
+            "NEXT":"下一页",
+            "SELECT":"请选择",
+            "QDELETEL":"您确认要删除【",
+            "QDELETER":"】?",
+            "FOOTINFO":"共&nbsp;%s&nbsp;页&nbsp;%s&nbsp;条记录&nbsp;&nbsp;&nbsp;当前为&nbsp;<input id='pn' name='pn' type='text' VTypes='label:页码;required:true;' style='width:30px;padding:0px;margin-bottom:0px;height:20px;' value='%s'/>&nbsp;页&nbsp;从第&nbsp;%s&nbsp;条到第&nbsp;%s&nbsp;条"
+        },
+        "TIP":{
+            "EXIST":"【%s】已经存在",
+            "NOEXIST":"【%s】不存在"
+        }
+    },
+    "AUTH": {
+        "TIP": {
+            "USERNAME": "登录名称",
+            "PASSWORD": "登录密码",
+            "LOGIN": "点击登录",
+            "ERROR": "登录名称或密码错误",
+            "OLDPWD": "旧密码",
+            "NEWPWD": "新密码",
+            "CRFPWD": "确认密码",
+            "SEARCHROLE": "输入搜索的角色名称...",
+            "SEARCHUSER": "输入搜索的用户名称..."
+        },
+        "BUTTON": {
+            "LOGIN": "登录",
+            "LOGOUT": "退出",
+            "CHANGEPWD": "变更密码",
+            "REMEMBER": "记住帐号",
+            "FORGET": "忘记密码",
+            "ADDROLE": "添加角色",
+            "ADDUSER": "添加用户"
+        },
+        "TITLE":{
+            "ROLEINFO": "角色信息",
+            "POWER": "权限",
+            "REALNAME": "真实姓名",
+            "ROLE": "角色",
+            "DEPARTMENT": "部门"
+        }
+    },
+    "SYSTEM":{
+        "LABEL":{
+            "NAME":"网站名称",
+            "URL":"网站域名",
+            "LOGO":"网站标志",
+            "ENTNAME":"公司名称",
+            "ADD":"通讯地址",
+            "ZIP":"邮政编码",
+            "TEL":"联系电话",
+            "FAX":"传真号码",
+            "MAIL":"管理员邮箱",
+            "ICP":"网站备案号",
+            "MPATH":"后台管理目录",
+            "ISRUN":"是否开启网站",
+            "CLOSE":"网站关闭原因",
+            "UPATH":"文件上传目录",
+            "UTYPE":"文件上传类型",
+            "USIZE":"文件上传大小"
+        }
+    },
+    "LINK":{
+        "LABEL":{
+            "NAME":"链接名称",
+            "LOGO":"LOGO图片",
+            "URL":"链接网址",
+            "TEXT":"文字链接",
+            "SHOW":"是否显示",
+            "SORTID":"排序",
+            "ADD": "添加链接",
+            "SEARCH": "输入搜索的链接名称..."
+        }
+    },
+    "CHANNEL":{
+        "LABEL":{
+            "PARENTKEY":"父栏目",
+            "TYPE":"栏目类型",
+            "NAME":"栏目名称",
+            "KEY":"栏目标识或链接",
+            "ISMENU":"是菜单？",
+            "SORTID":"排序",
+            "ADD": "添加栏目",
+            "SEARCH": "输入搜索的栏目名称...",
+            "SINGLE": "单章栏目",
+            "ROOT":"根",
+            "INLINK":"内链",
+            "OUTLINK":"外链"
+        }
+    },
+
+    "TEMPLATE":{
+        "LABEL":{
+            "NAME":"模板名称",
+            "KEY":"模板标识",
+            "ISUSE":"是否启用",
+            "ADD": "添加模板",
+            "SEARCH": "输入搜索的模板名称...",
+            "TFL":"模板文件列表",
+            "TFLFD":"文件目录",
+            "TFLRD":"资源文件根目录",
+            "TFLTD":"模板文件根目录",
+            "TFLFO":"文件操作",
+            "UPLOAD":"上传",
+            "UPLOADFILE":"上传文件",
+            "CREATEFILE":"创建文件",
+            "CREATEDIR":"创建子文件夹",
+            "REMANEDIR":"重命名此文件夹",
+            "DELETEDIR":"删除此文件夹",
+            "FILELIST":"文件列表",
+            "FILENAME":"文件名称",
+            "FILECONTENT":"文件内容",
+            "DIRNAME":"文件夹名称"
+        }
+    },
+    "ARTICLE":{
+        "LABEL":{
+            "ADD": "添加信息",
+            "SEARCH": "输入搜索的信息名称...",
+            "CHANNEL":"所属栏目",
+            "TITLE":"信息标题",
+            "DESCRIPTION":"简介描述",
+            "DATE":"发布日期",
+            "AUTHOR":"发布部门",
+            "TYPE":"信息类型",
+            "HTML":"图文信息",
+            "PDF":"PDF文件",
+            "SWF":"FLASH视频",
+            "PDFURL":"PDF地址",
+            "SWFURL":"视频地址",
+            "PICURLS":"图片地址",
+            "ADJUNCTURL":"附件地址",
+            "ADJUNCTUPLOAD":"上传附件",
+            "ISSHOW":"放置在首页图片中",
+            "CONTENT":"信息内容"
+        }
+    },
+    "TEMPOPT":{
+        "LABEL":{
+            "NAME":"报表时间",
+            "NAME01":"空气质量日报",
+            "NAME02":"水质周报",
+            "ADD": "添加报表",
+            "SEARCH": "输入搜索的报表日期...",
+            "FDQ":"地区",
+            "FSYWRW":"首要污染物",
+            "FDJ":"等级",
+            "FAQI":"AQI",
+            "FJCDM":"监测断面",
+            "FZL":"质量",
+            "ADDNEW":"新增",
+            "DIRNAME":"文件夹名称"
+        }
+    },
+    "DEPARTMENT":{
+        "LABEL":{
+            "ADD": "添加部门",
+            "SEARCH": "输入搜索的部门名称...",
+            "NAME":"部门名称",
+            "KEY":"部门标识"
+        }
+    }
+}

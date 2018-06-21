@@ -1,0 +1,187 @@
+<form action='/<%= CONST.SYSTEM.MPATH %>/roleadd' method='post' id='formrole'>
+<table class="bordered hovered" id="trolelist">
+        <thead>
+        <tr>
+            <th class="thead_hide"></th>
+            <th style="width:207px;"><%= COMMON.TITLE.NAME %></th>
+            <th class="thead_hide"></th>
+            <th><%= AUTH.TITLE.POWER %></th>
+            <th style="width:126px;"><%= COMMON.TITLE.OPERAT %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<pageCount; i++) {
+                if (i%2 == 0){%>
+        <tr class="td_one" id="tr<%=i%>">
+            <%}else{%>
+        <tr class="td_two" id="tr<%=i%>">
+            <%}%>
+            <td class="thead_hide" id="id<%=i%>"><%=smrl[i]._id%></td>
+            <td style="width:207px;" id="name<%=i%>"><%=smrl[i].name%></td>
+            <td class="thead_hide" id="power<%=i%>"><%=smrl[i].power%></td>
+            <td id="powertext<%=i%>"><%=smrl[i].powertext%></td>
+            <td style="width:126px;">
+                <a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditClick('<%=i%>')"><%= COMMON.TITLE.EDIT %></a>
+                <a class="button default treegrid_button" href="javascript:btnDelClick('<%=i%>');"><%= COMMON.TITLE.DELETE %></a>
+            </td>
+        </tr>
+        <% } %>
+
+        <input type="hidden" name="opt" id="opt" value="1"/>
+        <input type="hidden" name="id" id="id" value=""/>
+        </tbody>
+        <tfoot>
+        <tr class="error">
+            <td  colspan="4" class="sanpo-tgridtd">
+                <% if(!isFirstPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())-1);"><%= COMMON.TITLE.PREVIOUS %></a>
+                <% } %>
+                <%- footinfo%>
+                <% if(!isLastPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())+1);"><%= COMMON.TITLE.NEXT %></a>
+                <% } %>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</form>
+    <script>
+        var bshow = false;
+        var tobj;
+        var newobj;
+        var smmenu = <%-smmenu%>;
+        var pages=<%=pages%>;
+        $(window).resize(function(){
+            $('#power').css("width", ($('#article-content').width()-358)+"px");
+            $('.ui-multiselect-menu').css("width", ($('#article-content').width()-358)+"px");
+            $('.ui-multiselect').css("width", ($('#article-content').width()-358)+"px");
+        });
+        $(function () {
+            newobj = "<tr id='newobj'><td><div class='input-control text'><input id='name' name='name' type='text' value='' placeholder='<%= COMMON.TITLE.NAME %>' VTypes='label:<%= COMMON.TITLE.NAME %>;required:true;tip:errtip_a'><button class='helper' tabindex='-1' type='button'></button><span class='fg-color-red' id='errtip_a'></span></div></td><td><select id='power' name='power' multiple='multiple' size='5'></select><span class='fg-color-red' id='errtip_b'></span></td><td><a class='button default treegrid_button' style='margin-right: 10px !important;' href='javascript:btnSaveClick();'><%= COMMON.TITLE.SAVE %></a><a class='button default treegrid_button' href='javascript:btnCancelClick();'><%= COMMON.TITLE.CANCEL %></a></td></tr>";
+        })
+        $(document).ready(function () {
+            $('#pn').bind('keypress',function(event){
+                if(event.keyCode == "13"){
+                    if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                        listload($('#findvalue').val(), $('#pn').val());
+                    }
+                }
+            });
+            $('#btnAddRole').click(function(){
+                if (bshow){
+                    btnCancelClick();
+                }
+                $("#opt").val("1");
+                bshow = true;
+                $('#opt').before(newobj);
+                $('#power').css("width", ($('#article-content').width()-358)+"px");
+                $("#power").multiselect({noneSelectedText: "==<%= COMMON.TITLE.SELECT %><%= AUTH.TITLE.POWER %>==",selectedList:4,header:false});
+                $()['Input']({initAll: true});
+                loadList('');
+                $('#formrole').checkForm();
+            });
+        });
+        function loadList(v){
+            var ar = v.split(',');
+            for (i=0; i < smmenu.length; i++){
+                var og = $('<optgroup/>',{label:smmenu[i].LABEL});
+                if (smmenu[i].URL == undefined){
+                    for (j=0; j < smmenu[i].SUBMENU.length; j++){
+                            var opt = $('<option />', {value: smmenu[i].SUBMENU[j].URL,text: smmenu[i].SUBMENU[j].LABEL});
+                            if ($.inArray(smmenu[i].SUBMENU[j].URL, ar)!=-1){
+                                opt.attr('selected','selected');
+                            }
+                            opt.appendTo(og);
+                    }
+                }else{
+                    var opt = $('<option />', {value: smmenu[i].URL,text: smmenu[i].LABEL});
+                    if ($.inArray(smmenu[i].URL, ar)!=-1){
+                        opt.attr('selected','selected');
+                    }
+                    opt.appendTo(og);
+                }
+                og.appendTo($("#power").multiselect());
+            }
+            $("#power").multiselect('refresh');
+        }
+        function btnEditClick(i){
+            if (bshow){
+                btnCancelClick();
+            }
+            tobj = $('#tr'+i);
+            var id = $('#id'+i).text();
+            var name = $('#name'+i).text();
+            var power = $('#power'+i).text();
+            var powertext = $('#powertext'+i).text();
+            $('#tr'+i).replaceWith(newobj);
+            bshow = true;
+            $("#opt").val("2");
+            $('#name').val(name);
+            $('#id').val(id);
+            $('#power').css("width", ($('#article-content').width()-358)+"px");
+            $("#power").multiselect({noneSelectedText: "==<%= COMMON.TITLE.SELECT %><%= AUTH.TITLE.POWER %>==",selectedList:4,header:false});
+            $()['Input']({initAll: true});
+            loadList(power);
+            $('#formrole').checkForm();
+        }
+        function btnDelClick(i){
+            var id = $('#id'+i).text();
+            var name = $('#name'+i).text();
+            $.Zebra_Dialog('<%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%>', {
+                'type': 'question'
+                ,'auto_close':false,'show_close_button':false,
+                'overlay_close':false,'width': '400'
+                ,'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                    {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                        $.ajax({
+                            url:"/<%= CONST.SYSTEM.MPATH %>/roledel",
+                            type:'POST',
+                            data: {"did": id},
+                            dataType:"json",
+                            success:function(data) {
+                                if (data.success){
+                                    loadArticle(data['url'], data['isRedirect']);
+                                } else {
+                                    $('#err_tips')[0].innerHTML = data['tip'];
+                                }
+                            }
+                        });
+                    }}]
+            });
+        }
+        function btnCancelClick() {
+            bshow = false;
+            if ($("#opt").val()=="1"){
+                $('#newobj').remove();
+            }else{
+                $('#newobj').replaceWith(tobj);
+            }
+        }
+        function btnSaveClick() {
+            if ($('#formrole').checkFormEx()) {
+                if ($("#power").val() == null){
+                    $('#errtip_b')[0].innerHTML='<%= COMMON.TITLE.SELECT %><%= AUTH.TITLE.POWER %>';
+                }else{
+                    var sva = $("#power").val();
+                    var sta = $("#power").multiselect('textex');
+                    if (sva.toString().indexOf("SANPO_")>-1 && sva.toString().indexOf("information")==-1){
+                        sva.push("information");
+                        sta += ",信息管理";
+                    }
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/roleadd",
+                        type:'POST',
+                        data: {"id": $('#id').val(),"name": $('#name').val(),"power":sva,"powertext":sta,"opt":$("#opt").val()},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                loadArticle(data['url'], data['isRedirect']);
+                            } else {
+                                $('#err_tips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    </script>

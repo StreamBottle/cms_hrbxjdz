@@ -1,0 +1,91 @@
+<form action='/<%= CONST.SYSTEM.MPATH %>/channeladd' method='post' id='formchannel'>
+    <table class="bordered hovered" id="tchannellist">
+        <thead>
+        <tr>
+            <th class="thead_hide"></th>
+            <th><%= ARTICLE.LABEL.TITLE %></th>
+            <th><%= ARTICLE.LABEL.DESCRIPTION %></th>
+            <th><%= ARTICLE.LABEL.DATE %></th>
+            <th><%= ARTICLE.LABEL.AUTHOR %></th>
+            <th><%= ARTICLE.LABEL.TYPE %></th>
+            <th style="width:126px;"><%= COMMON.TITLE.OPERAT %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<pageCount; i++) {
+                if (i%2 == 0){%>
+        <tr class="td_one" id="tr<%=i%>">
+            <%}else{%>
+        <tr class="td_two" id="tr<%=i%>">
+            <%}%>
+            <td class="thead_hide" id="id<%=i%>"><%=smal[i]._id%></td>
+            <td id="title<%=i%>"><%=smal[i].title%></td>
+            <td id="description<%=i%>"><%=smal[i].description%></td>
+            <td id="pdate<%=i%>"><%=smal[i].pdate%></td>
+            <td id="author<%=i%>"><%=smal[i].author%></td>
+            <td id="atypes<%=i%>"><input type="hidden" name="atype<%=i%>" id="atype<%=i%>" value="<%=smal[i].atype%>"/><%=smal[i].atype==1?ARTICLE.LABEL.HTML:smal[i].atype==2?ARTICLE.LABEL.PDF:smal[i].atype==3?ARTICLE.LABEL.SWF:'栏目单章'%></td>
+            <td style="width:126px;">
+                <a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditClick('<%=i%>')"><%= COMMON.TITLE.EDIT %></a>
+                <a class="button default treegrid_button" href="javascript:btnDelClick('<%=i%>');"><%= COMMON.TITLE.DELETE %></a>
+            </td>
+        </tr>
+        <% } %>
+        </tbody>
+        <tfoot>
+        <tr class="error">
+            <td  colspan="7" class="sanpo-tgridtd">
+                <% if(!isFirstPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())-1);"><%= COMMON.TITLE.PREVIOUS %></a>
+                <% } %>
+                <%- footinfo%>
+                <% if(!isLastPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())+1);"><%= COMMON.TITLE.NEXT %></a>
+                <% } %>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</form>
+<script>
+    $(document).ready(function () {
+        $('#pn').bind('keypress',function(event){
+            if(event.keyCode == "13"){
+                if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                    listload($('#findvalue').val(), $('#pn').val());
+                }
+            }
+        });
+        $('#btnAddArticle').click(function(){
+            loadArticle('/<%= CONST.SYSTEM.MPATH %>/particle/'+$('#achannel').val()+'/new',true);
+        });
+    });
+    function btnDelClick(i){
+        var id = $('#id'+i).text();
+        var name = $('#title'+i).text();
+        $.Zebra_Dialog('<%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%>', {
+            'type': 'question'
+            ,'auto_close':false,'show_close_button':false,
+            'overlay_close':false,
+            'width': '400'
+            ,'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/infodel",
+                        type:'POST',
+                        data: {"did": id, achannel:$('#achannel').val()},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                loadArticle(data['url'], data['isRedirect']);
+                            } else {
+                                $('#err_tips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+                }}]
+        });
+    }
+    function btnEditClick(i){
+        loadArticle('/<%= CONST.SYSTEM.MPATH %>/particle/'+$('#achannel').val()+'/'+$('#id'+i).text(),true);
+    }
+</script>

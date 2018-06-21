@@ -1,0 +1,195 @@
+<div id="article-header">
+    <div class="div_title">
+        <h2><%=MENU[0].SUBMENU[0].LABEL%></h2>
+    </div>
+</div>
+<form class="formsite" id="formsite" action="/<%= CONST.SYSTEM.MPATH %>/site" method="post">
+    <div class="float-left width_50" id="article-left">
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.NAME%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="name" name="name" placeholder="<%=SYSTEM.LABEL.NAME%>" value="<%=CONST.SYSTEM.NAME%>"
+                   VTypes="label:<%=SYSTEM.LABEL.NAME%>;required:true;tip:errtip_a">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_a"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.URL%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="url" name="url" placeholder="<%=SYSTEM.LABEL.URL%>" value="<%=CONST.SYSTEM.URL%>"
+                   VTypes="label:<%=SYSTEM.LABEL.URL%>;required:true;tip:errtip_b">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_b"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.LOGO%></label></div>
+        <div class="input-control text float-left" id="divLogo">
+            <input type="text" id="logo" name="logo" placeholder="<%=SYSTEM.LABEL.LOGO%>" value="<%=CONST.SYSTEM.LOGO%>"
+                   VTypes="label:<%=SYSTEM.LABEL.LOGO%>;required:true;tip:errtip_c">
+            <span id="errtip_c"></span><span id="errtip_fu"></span>
+        </div>
+        <div class="float-left">
+            <span class="label_left" id="btnUpload"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.ENTNAME%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="entname" name="entname" placeholder="<%=SYSTEM.LABEL.ENTNAME%>" value="<%=CONST.SYSTEM.ENTNAME%>"
+                   VTypes="label:<%=SYSTEM.LABEL.ENTNAME%>;required:true;tip:errtip_d">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_d"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.ICP%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="icp" name="icp" placeholder="<%=SYSTEM.LABEL.ICP%>" value="<%=CONST.SYSTEM.ICP%>"
+                   VTypes="label:<%=SYSTEM.LABEL.ICP%>;required:true;tip:errtip_e">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_e"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.MPATH%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="mpath" name="mpath" placeholder="<%=SYSTEM.LABEL.MPATH%>" value="<%=CONST.SYSTEM.MPATH%>"
+                   VTypes="label:<%=SYSTEM.LABEL.MPATH%>;required:true;tip:errtip_f">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_f"></span>
+        </div>
+        <div class="label_left">
+            <label onclick="" class="input-control switch">
+                <input type="checkbox" id="isrun" name="isrun" <%if (CONST.SYSTEM.ISRUN!=0){%>checked=""<%}%>>
+                <span class="helper"><%=SYSTEM.LABEL.ISRUN%></span>
+            </label>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.CLOSE%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="sclose" name="sclose" placeholder="<%=SYSTEM.LABEL.CLOSE%>" value="<%=CONST.SYSTEM.CLOSE%>">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_h"></span>
+        </div>
+    </div>
+    <div class="float-left width_50" id="article-right">
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.ADD%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="add" name="add" placeholder="<%=SYSTEM.LABEL.ADD%>" value="<%=CONST.SYSTEM.ADD%>"
+                   VTypes="label:<%=SYSTEM.LABEL.ADD%>;required:true;tip:errtip_i">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_i"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.ZIP%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="zip" name="zip" placeholder="<%=SYSTEM.LABEL.ZIP%>" value="<%=CONST.SYSTEM.ZIP%>"
+                   VTypes="label:<%=SYSTEM.LABEL.ZIP%>;required:true;tip:errtip_j">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_j"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.TEL%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="tel" name="tel" placeholder="<%=SYSTEM.LABEL.TEL%>" value="<%=CONST.SYSTEM.TEL%>"
+                   VTypes="label:<%=SYSTEM.LABEL.TEL%>;required:true;tip:errtip_k">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_k"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.FAX%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="fax" name="fax" placeholder="<%=SYSTEM.LABEL.FAX%>" value="<%=CONST.SYSTEM.FAX%>">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_l"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.MAIL%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="mail" name="mail" placeholder="<%=SYSTEM.LABEL.MAIL%>" value="<%=CONST.SYSTEM.MAIL%>"
+                   VTypes="label:<%=SYSTEM.LABEL.MAIL%>;required:true;tip:errtip_m">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_m"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.UPATH%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="upath" name="upath" placeholder="<%=SYSTEM.LABEL.UPATH%>" value="<%=CONST.SYSTEM.UPATH%>"
+                   VTypes="label:<%=SYSTEM.LABEL.UPATH%>;required:true;tip:errtip_n">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_n"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.UTYPE%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="utype" name="utype" placeholder="<%=SYSTEM.LABEL.UTYPE%>" value="<%=CONST.SYSTEM.UTYPE%>"
+                   VTypes="label:<%=SYSTEM.LABEL.UTYPE%>;required:true;tip:errtip_o">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_o"></span>
+        </div>
+        <div class="label_left label_103"><label class="float-right"><%=SYSTEM.LABEL.USIZE%></label></div>
+        <div class="input-control text float-left">
+            <input type="text" id="usize" name="usize" placeholder="<%=SYSTEM.LABEL.USIZE%>" value="<%=CONST.SYSTEM.USIZE%>"
+                   VTypes="label:<%=SYSTEM.LABEL.USIZE%>;required:true;tip:errtip_p">
+            <button class="helper" tabindex="-1" type="button"></button>
+            <span id="errtip_p"></span>
+        </div>
+    </div>
+</form>
+<div class="div_title">
+    <a class="button bg-color-orangeDark default" id="btnSave"><%= COMMON.TITLE.SAVE %></a>
+</div>
+
+<script>
+    $(function(){
+        $('#btnUpload').uploadifive({
+            'buttonText': '<%=COMMON.TITLE.SELECT%>',
+            'auto': true,
+            'height': '32',
+            'width':'80',
+            'formData': {action: "UploadLogo"},
+            'multi': false,
+            'queueID': 'errtip_fu',
+            'removeCompleted' : true,
+            'uploadScript': "/<%= CONST.SYSTEM.MPATH %>/upload",
+            'onAddQueueItem' : function(file){
+                var fileName = file.name;
+                var ext = fileName.substring(fileName.lastIndexOf(".")+1,fileName.length); // Extract EXT
+                switch (ext.toLowerCase()) {
+                    case 'jpg':
+                    case 'jpeg':
+                    case 'png':
+                    case 'gif':
+                    case 'ico':
+                        $("#errtip_c").text('');
+                        break;
+                    default:
+                        $("#errtip_c").css({color: 'rgb(255, 0, 0)'});
+                        $("#errtip_c").text('无效的文件类型');
+                        $('#btnUpload').uploadifive('cancel', file);
+                        break;
+                }
+            },
+            'onUploadComplete': function (file, data) {
+                $('#logo').val(data);
+            }
+        });
+    });
+    $(window).resize(function(){
+        $('.input-control').css("width", ($('#article-right').width()-130)+"px");
+        $('#divLogo').css("width", ($('#article-right').width()-210)+"px");
+        $('#logo').css({"width":($('#article-right').width()-210)+"px","margin":"0"});
+    });
+    $(document).ready(function(){
+        $('.input-control').css("width", ($('#article-right').width()-130)+"px");
+        $('#divLogo').css("width", ($('#article-right').width()-210)+"px");
+        $('#logo').css({"width":($('#article-right').width()-210)+"px","margin":"0"});
+        $('#formsite').checkForm();
+    });
+    $("#btnSave").click(function() {
+        $('#formsite').submit();
+    });
+    $('#formsite').ajaxForm({
+        dataType: 'json'
+        ,beforeSubmit: beforesubmitopt
+        ,success: successopt
+    });
+    function beforesubmitopt() {
+        if ($('#formsite').checkFormEx()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function successopt(data) {
+        if (data['success']) {
+            loadArticle(data['url'], data['isRedirect']);
+        } else {
+            $('#err_tips')[0].innerHTML = data['tip'];
+        }
+    }
+</script>

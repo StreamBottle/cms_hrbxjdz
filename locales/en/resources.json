@@ -1,0 +1,19 @@
+{
+    "AUTH": {
+        "TIP": {
+            "USERNAME": "name",
+            "PASSWORD": "password",
+            "LOGIN": "login",
+            "ERROR": "name or password error",
+            "OLDPWD": "old password",
+            "NEWPWD": "new password",
+            "CRFPWD": "confirm password"
+        },
+        "BUTTON": {
+            "LOGIN": "login",
+            "LOGOUT": "logout",
+            "REMEMBER": "Remember",
+            "FORGET": "Forgot"
+        }
+    }
+}

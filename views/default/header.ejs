@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title><%= CONST.SYSTEM.NAME %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+	<!-- <link href="https://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet"> -->
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/icomoon.css">
+	<!-- Themify Icons-->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/themify-icons.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/bootstrap.css">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/magnific-popup.css">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/owl.theme.default.min.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/style.css">
+	<link rel="stylesheet" href="/<%=CONST.SYSTEM.THEME%>/css/swiper.min.css">
+	<!-- Modernizr JS -->
+	<script src="/<%=CONST.SYSTEM.THEME%>/js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="/<%=CONST.SYSTEM.THEME%>/js/respond.min.js"></script>
+	<![endif]-->
+	<style type="text/css">
+	.swiper-slide {
+        /*background:no-repeat;*/
+        background-position: center;
+        /*background-size:100% 100%;*/
+        background-size: cover;
+    }
+    .gtco-nav {
+        padding: 18px 0;
+		background:url(/<%=CONST.SYSTEM.THEME%>/images/msg_bj.jpg) repeat-x;
+		box-shadow:0 0 20px rgba(0, 0, 0, 0.43);
+	}
+	.gtco-nav ul {
+           margin: 12px 0 0;
+           padding: 0;
+	}
+	.gtco-nav ul li a{
+	   color: #333;
+	}
+	.gtco-nav ul li a:hover, .gtco-nav ul li a:focus, .gtco-nav ul li a:active {
+	  color: #17b794;
+	}
+	.gtco-nav ul li.has-dropdown:hover a, .gtco-nav ul li.has-dropdown:focus a {
+	  color: #17b794;
+	}
+/*	.gtco-nav ul li.has-dropdown .dropdown::before{
+		left: 65px;
+	}
+	.gtco-nav ul li.has-dropdown .dropdown {
+		text-align: center;
+		width: 132px;
+		margin-left:-24px; 
+	}*/
+	.gtco-nav ul li.has-dropdown .dropdown::before{
+		left: 85px;
+	}
+	.gtco-nav ul li.has-dropdown .dropdown {
+		text-align: center;
+		width: 172px;
+		margin-left:-42px; 
+	}
+	.gtco-nav-toggle.gtco-nav-white > i::before, .gtco-nav-toggle.gtco-nav-white > i::after {
+	    background: #17b794 none repeat scroll 0 0;
+	}
+	.gtco-nav-toggle.gtco-nav-white > i {
+	    background: #17b794 none repeat scroll 0 0;
+	    color: #fff;
+	}
+	.gtco-nav-toggle.active i {
+	    background: transparent none repeat scroll 0 0;
+	}
+	.swiper-slide {
+        /*background:no-repeat;*/
+        background-position: center;
+        /*background-size:100% 100%;*/
+        background-size: cover;
+    }
+    .gtco-cover .swiper-wrapper .overlay	{
+  	background-image:-webkit-linear-gradient(  
+    to bottom,   
+    rgba(29, 43, 83, 0.6) 0%,   
+    rgba(29, 43, 83, 0.2) 80%);  
+  	background-image: linear-gradient(  
+    to bottom,   
+    rgba(29, 43, 83, 0.6) 0%,   
+    rgba(29, 43, 83, 0.2) 80%); 
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 0.5; 
+	}
+	.feature-center {
+	  margin-bottom: 20px;
+	}
+	</style>
+	</head>
+	<body>
+
+	<div class="gtco-loader"></div>
+
+	<div id="page">
+	 <!--  <nav class="gtco-nav" role="navigation">
+	    <div class="gtco-container" style="max-width:1260px">
+	      <div class="row">
+	        <div class="col-sm-2 col-xs-12">
+	          <div id="gtco-logo"><a class="navbar-brand" href="/"><img style="height:76px; margin-top:-16px;" src="/<%=CONST.SYSTEM.THEME%>/images/logo.png"></a></div>
+	        </div>
+	        <div class="col-xs-10 text-right menu-1">
+	          <ul>  
+				<li><a href="/">首页</a></li>		
+				<li class="has-dropdown"><a href="#">关于新金</a>
+				  <ul class="dropdown">
+				    <li><a href="/channel/ABOUT/GSJJ">公司简介</a></li>		
+				    <li><a href="http://www.hrbxjdz.com.cn/#gtco-qa">公司资质</a></li>
+				  </ul>
+				</li>	  
+				<li><a href="/channel/ROOT/SERVICE">业务范围</a></li>
+				<li class="has-dropdown"><a href="http://www.hrbxjdz.com.cn/#news-features">新闻资讯</a>
+				  <ul class="dropdown">
+				    <li><a href="/channel/NEWS/GSDSJ">公司大事记</a></li>
+				    <li><a href="/channel/NEWS/ZBZX">中标资讯</a></li>
+				    <li><a href="/channel/NEWS/RYZZ">荣誉资质</a></li>							
+				  </ul>
+				</li>					  
+				<li><a href="http://www.hrbxjdz.com.cn/#gtco-portfolio">成功案例</a></li>					
+				<li class="has-dropdown"><a href="#">服务体系</a>
+				  <ul class="dropdown">				
+				    <li><a href="/channel/ITEM/SHFWCN">售后服务承诺 </a></li>					
+				    <li><a href="/channel/ITEM/ITSS">ITSS运维服务</a></li>					
+				  </ul>
+				</li>					  
+				<li><a href="http://www.hrbxjdz.com.cn/#gtco-products">合作伙伴</a></li>				
+				<li><a href="/channel/ROOT/CONTACT">联系我们</a></li>					
+				<li><a href="/channel/ROOT/JOIN">加入我们</a></li>				
+	          </ul>
+	        </div>
+	      </div>
+	    </div>
+	  </nav> -->
+	  	  <nav class="gtco-nav" role="navigation">
+	    <div class="gtco-container" style="max-width:1260px">
+	      
+	      <div class="row">
+	        <div class="col-sm-2 col-xs-12">
+	          <div id="gtco-logo"><a class="navbar-brand" href="index.html"><img style="height:76px; margin-top:-18px;" src="/<%=CONST.SYSTEM.THEME%>/images/logo.png"></a></div>
+	        </div>
+	        <div class="col-xs-10 text-right menu-1">
+	          <ul>
+	           <%var b = false;
+			for (var i = 0; i < CUSTOM.MENU.length; i++){
+			  if (CUSTOM.MENU[i].parentkey === "SINGLE"){
+				if (b){%>
+					</ul></li>
+				<%}b = false;%>
+			<li><a href="<%= CUSTOM.MENU[i].stype==="2"?CUSTOM.MENU[i].key:"/channel/" + CUSTOM.MENU[i].parentkey + "/" + CUSTOM.MENU[i].key %>"><%= CUSTOM.MENU[i].name %></a></li>
+			  <%}else{
+				if (CUSTOM.MENU[i].hassub === 0 && CUSTOM.MENU[i].parentkey === "ROOT"){
+				  if (b){%>
+			</ul></li>
+				  <%}b = false;%>
+			<li><a href="<%= CUSTOM.MENU[i].stype==="2"?CUSTOM.MENU[i].key:"/channel/" + CUSTOM.MENU[i].parentkey + "/" + CUSTOM.MENU[i].key %>"><%= CUSTOM.MENU[i].name %></a></li>
+				<%}else{
+				if (CUSTOM.MENU[i].hassub === 0){%>
+			      <li><a href="<%= CUSTOM.MENU[i].stype==="2"?CUSTOM.MENU[i].key:"/channel/" + CUSTOM.MENU[i].parentkey + "/" + CUSTOM.MENU[i].key %>"><%= CUSTOM.MENU[i].name %></a></li>
+				<%}else{if (b){%>
+			</ul></li>
+				<%}b = true;%>
+			<li class="has-dropdown"><a href="#"><%= CUSTOM.MENU[i].name %></a><ul class="dropdown">
+			<%}}%>
+			<%}}%> 
+	          </ul>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </nav>

@@ -1,0 +1,12 @@
+module.exports={
+cookieSecret:'cmshrbxjdz'
+,poolName:"cmshrbxjdzpool"
+,db:'cms_hrbxjdz'
+,host:'127.0.0.1'
+,port:'33088'
+,uid:'hrbxjdz'
+,pwd:'jIuhAngkEjI3o021'
+,auto_reconnect:'true'
+,poolSize:1
+,w:-1
+};

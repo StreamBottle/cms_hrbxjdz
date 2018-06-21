@@ -1,0 +1,28 @@
+<div id="article-header">
+    <div class="butleft"><a class="button default" href="#" id="btnAddUser"> <%= AUTH.BUTTON.ADDUSER %></a></div>
+    <div class="fg-color-red" style="clear:none;float:left;margin-top: 6px;">
+        <span id="err_tips"></span>
+    </div>
+    <div class="input-control text">
+        <input type="text" id="findvalue" placeholder="<%= AUTH.TIP.SEARCHUSER %>">
+        <button class="btn-search"></button>
+    </div>
+</div>
+<div id="article-content">
+</div>
+<script>
+    var pc = 10;
+    function listload(q, pn) {
+        if (q == '') {
+            $("#article-content").load('/<%= CONST.SYSTEM.MPATH %>/smulskip?pn=' + pn + '&pc=' + pc);
+        } else {
+            $("#article-content").load('/<%= CONST.SYSTEM.MPATH %>/smulskip?pn=' + pn + '&pc=' + pc + '&q=' + encodeURIComponent(q));
+        }
+    }
+    $(".btn-search").click(function() {
+        listload($('#findvalue').val(), 1);
+    });
+    $(document).ready(function () {
+        listload('', 1);
+    });
+</script>

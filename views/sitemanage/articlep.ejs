@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <%- include head %>
+    <title><%= SITE.NAME %> -- <%= SITE.DESCRIPTION %></title>
+</head>dada
+<body onresize="funResize()">
+<%- include header%>
+<%- include nav%>
+<div class="page fill" id="article" style="overflow-y:auto;overflow-x:hidden;">
+<div id="article-header"><div class="fg-color-red" style="clear:none;float:left;margin-top: 6px;"><span id="err_tips"></span></div></div>
+<div id="article-content">
+    <form id="formpublish" action="/<%= CONST.SYSTEM.MPATH %>/infoadd" method="post">
+        <table id="newobj">
+            <tr>
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.TITLE %></label></td>
+                <td class="table_td_input" colspan="5">
+                    <div class="input-control text">
+                        <input type="text" id="title" name="title" placeholder="<%= ARTICLE.LABEL.TITLE %>" value="<%=obj.title%>"
+                               VTypes="label:<%= ARTICLE.LABEL.TITLE %>;required:true;tip:errtip_a">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                        <span id="errtip_a"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.DESCRIPTION %></label></td>
+                <td class="table_td_input" colspan="5">
+                    <div class="input-control text">
+                        <input type="text" id="description" name="description" placeholder="<%= ARTICLE.LABEL.DESCRIPTION %>" value="<%=obj.description%>"
+                               VTypes="label:<%= ARTICLE.LABEL.DESCRIPTION %>;required:true;tip:errtip_a">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                        <span id="errtip_a"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.AUTHOR %></label></td>
+                <td class="table_td_input">
+                    <div class="input-control text">
+                        <input type="hidden" name="authorid" id="authorid" value="<%= obj.authorid %>"/>
+                        <input type="text" id="author" name="author" placeholder="<%= ARTICLE.LABEL.AUTHOR %>" value="<%=obj.author%>"
+                               VTypes="label:<%= ARTICLE.LABEL.AUTHOR %>;required:true;tip:errtip_b">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                        <span id="errtip_b"></span>
+                    </div>
+                </td>
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.DATE %></label></td>
+                <td class="table_td_input">
+                    <div class="input-control text">
+                        <input type="text" id="pdate" name="pdate" placeholder="<%= ARTICLE.LABEL.DATE %>" value="<%=obj.pdate%>"
+                               VTypes="label:<%= ARTICLE.LABEL.DATE %>;required:true;tip:errtip_c">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                        <span id="errtip_c"></span>
+                    </div>
+                </td>
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.TYPE %></label></td>
+                <td class="table_td_input">
+                    <div class="input-control select">
+                        <select id="atype" name="atype">
+                            <option value="1" <%=obj.atype==="1"?"selected":""%>><%= ARTICLE.LABEL.HTML %></option>
+                            <option value="2" <%=obj.atype==="2"?"selected":""%>><%= ARTICLE.LABEL.PDF %></option>
+                            <option value="3" <%=obj.atype==="3"?"selected":""%>><%= ARTICLE.LABEL.SWF %></option>
+                            <option value="4" <%=obj.atype==="4"?"selected":""%>>栏目单章</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_label"><label class="margin_right_0" id="labelurl"><%= ARTICLE.LABEL.PICURLS %></label></td>
+                <td class="table_td_input" colspan="3">
+                    <div class="input-control text">
+                        <input type="text" id="aurl" name="aurl" placeholder="<%= ARTICLE.LABEL.PICURLS %>" value="<%=obj.aurl%>">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                    </div>
+                </td>
+                <td class="table_td_label"><a class="button default " href="#" id="btnUploadFile"><%=TEMPLATE.LABEL.UPLOADFILE%></a></td>
+                <td class="table_td_label" style="width:168px;padding-left:10px;" id="tdisshow">
+                    <label onclick="" class="input-control checkbox">
+                        <input type="checkbox" id="isshow" name="isshow" <%=obj.isshow===1?"checked":""%>>
+                        <span class="helper"><%=ARTICLE.LABEL.ISSHOW%></span>
+                    </label>
+                </td>
+            </tr>
+            <tr id="trcontent">
+                <td class="table_td_label"><label class="margin_right_0"><%= ARTICLE.LABEL.CONTENT %></label></td>
+                <td class="table_td_input" colspan="5">
+                    <textarea id="acontent" name="acontent" style="height:300px;width:100%"><%=obj.acontent%></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_label"><label class="margin_right_0" id="labelurl"><%= ARTICLE.LABEL.ADJUNCTURL %></label></td>
+                <td class="table_td_input" colspan="3">
+                    <div class="input-control text">
+                        <input type="text" id="adurl" name="adurl" placeholder="<%= ARTICLE.LABEL.ADJUNCTURL %>" value="">
+                        <button class="helper" tabindex="-1" type="button"></button>
+                    </div>
+                </td>
+                <td class="table_td_label"><a class="button default " href="#" id="btnUploadAdjunct"><%=ARTICLE.LABEL.ADJUNCTUPLOAD%></a></td>
+            </tr>
+            <tr>
+                <td class="table_td_input div_title" colspan="6">
+                    <a class="button default" href="#" id="btnASave"><%= COMMON.TITLE.SAVE %></a>
+                    <a class="button default" href="#" id="btnACancel"><%= COMMON.TITLE.CANCEL %></a>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="achannel" id="achannel" value="<%=obj.achannel%>"/>
+        <input type="hidden" name="id" id="id" value="<%=obj._id%>"/>
+        <input type="hidden" name="multi" id="multi" value="<%=obj.atype%>"/>
+    </form>
+</div>
+<script>
+    $(function() {
+        $("#acontent").htmlarea();
+    });
+    $(document).ready(function () {
+        $('#formpublish').checkForm();
+    });
+    $("#btnASave").click(function() {
+        $('#formpublish').submit();
+    });
+    $('#formpublish').ajaxForm({
+        dataType: 'json'
+        ,beforeSubmit: beforesubmitopt
+        ,success: successopt
+    });
+    function beforesubmitopt() {
+        if ($('#formpublish').checkFormEx()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function successopt(data) {
+        if (data['success']) {
+            loadArticle(data['url'], data['isRedirect']);
+        } else {
+            $('#err_tips')[0].innerHTML = data['tip'];
+        }
+    }
+    $('#btnUploadAdjunct').click(function(){
+        var dlg = $.Zebra_Dialog('<form id="formuploadfile"><div><span id="errtip_dlg"></span></div><div id="filequeue"></div><a id="btnCancel" href="#" class="button default float-right "><%=COMMON.TITLE.CANCEL%></a><a id="btnUpload" href="javascript:$(\'#btnSelect\').uploadifive(\'upload\')" class="button default float-right "><%=TEMPLATE.LABEL.UPLOAD%></a><input id="btnSelect" name="btnSelect" type="button"></form>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%=TEMPLATE.LABEL.UPLOADFILE%>',
+            'buttons':false
+        });
+        $('#btnCancel').click(function(){
+            dlg.close();
+        });
+        $('#btnSelect').uploadifive({
+            'buttonText':'<%=COMMON.TITLE.SELECT%>',
+            'auto':false,
+            'height':'32',
+            'formData':{action:"UpLoadFile"},
+            'multi':$('#multi').val()==="1",
+            'queueID':'filequeue',
+            'uploadScript':"/<%= CONST.SYSTEM.MPATH %>/upload",
+            'onUploadComplete': function(file, data) {
+                var v = $('#adurl').val() + ";" + data;
+                if (v.substring(0,1) === ";"){
+                    v = v.substring(1, v.length)
+                }
+                $('#adurl').val(v);
+            }
+        });
+    });
+    $('#btnUploadFile').click(function(){
+        var dlg = $.Zebra_Dialog('<form id="formuploadfile"><div><span id="errtip_dlg"></span></div><div id="filequeue"></div><a id="btnCancel" href="#" class="button default float-right "><%=COMMON.TITLE.CANCEL%></a><a id="btnUpload" href="javascript:$(\'#btnSelect\').uploadifive(\'upload\')" class="button default float-right "><%=TEMPLATE.LABEL.UPLOAD%></a><input id="btnSelect" name="btnSelect" type="button"></form>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%=TEMPLATE.LABEL.UPLOADFILE%>',
+            'buttons':false
+        });
+        $('#btnCancel').click(function(){
+            dlg.close();
+        });
+        $('#btnSelect').uploadifive({
+            'buttonText':'<%=COMMON.TITLE.SELECT%>',
+            'auto':false,
+            'height':'32',
+            'formData':{action:"UpLoadFile"},
+            'multi':$('#multi').val()==="1",
+            'queueID':'filequeue',
+            'uploadScript':"/<%= CONST.SYSTEM.MPATH %>/upload",
+            'onAddQueueItem' : function(file){
+                var fileName = file.name;
+                var ext = fileName.substring(fileName.lastIndexOf(".")+1,fileName.length); // Extract EXT
+                if ($('#atype').val() === "1" || $('#atype').val() === "4"){
+                    switch (ext.toLowerCase()) {
+                        case 'jpg':
+                        case 'jpeg':
+                        case 'png':
+                        case 'gif':
+                        case 'ico':
+                            $("#errtip_dlg").text('');
+                            break;
+                        default:
+                            $("#errtip_dlg").css({color: 'rgb(255, 0, 0)'});
+                            $("#errtip_dlg").text('无效的文件类型');
+                            $('#btnSelect').uploadifive('cancel', file);
+                            break;
+                    }
+                }else if ($('#atype').val() === "2"){
+                    switch (ext.toLowerCase()) {
+                        case 'pdf':
+                            $("#errtip_dlg").text('');
+                            break;
+                        default:
+                            $("#errtip_dlg").css({color: 'rgb(255, 0, 0)'});
+                            $("#errtip_dlg").text('无效的文件类型');
+                            $('#btnSelect').uploadifive('cancel', file);
+                            break;
+                    }
+                }else if ($('#atype').val() === "2"){
+                    switch (ext.toLowerCase()) {
+                        case 'swf':
+                            $("#errtip_dlg").text('');
+                            break;
+                        default:
+                            $("#errtip_dlg").css({color: 'rgb(255, 0, 0)'});
+                            $("#errtip_dlg").text('无效的文件类型');
+                            $('#btnSelect').uploadifive('cancel', file);
+                            break;
+                    }
+                }else{
+
+                }
+            },
+            'onUploadComplete': function(file, data) {
+                var v = $('#aurl').val() + ";" + data;
+                if (v.substring(0,1) === ";"){
+                    v = v.substring(1, v.length)
+                }
+                $('#aurl').val(v);
+            }
+        });
+    });
+    $('#atype').change(function(){
+       if ($('#atype').val() === "1" || $('#atype').val() === "4"){
+           $('#labelurl').text("<%= ARTICLE.LABEL.PICURLS %>");
+           $('#aurl').attr('placeholder',"<%= ARTICLE.LABEL.PICURLS %>");
+           $('#tdisshow').show();
+           $('#trcontent').show();
+           $('#multi').val("1");
+       } else if ($('#atype').val() === "2"){
+           $('#labelurl').text("<%= ARTICLE.LABEL.PDFURL %>");
+           $('#aurl').attr('placeholder',"<%= ARTICLE.LABEL.PDFURL %>");
+           $('#tdisshow').hide();
+           $('#trcontent').hide();
+           $('#multi').val("2");
+       }else{
+           $('#labelurl').text("<%= ARTICLE.LABEL.SWFURL %>");
+           $('#aurl').attr('placeholder',"<%= ARTICLE.LABEL.SWFURL %>");
+           $('#tdisshow').hide();
+           $('#trcontent').hide();
+           $('#multi').val("3");
+       }
+    });
+    $('#btnACancel').click(function(){
+        loadArticle('/<%= CONST.SYSTEM.MPATH %>/information?achannel=' + $('#achannel').val())
+    });
+</script>
+    </div>
+<%- include footer%>
+</body>
+</html>
+

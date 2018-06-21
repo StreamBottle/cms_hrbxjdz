@@ -1,0 +1,465 @@
+<div id="article-header">
+    <div class="butleft"><a class="button default" href="javascript:loadArticle('/<%= CONST.SYSTEM.MPATH %>/template')" id="btnReturn"> <%= COMMON.TITLE.RETURN %></a></div>
+    <div class="div_title">
+        <h2>(<%=smto.name%>)<%=TEMPLATE.LABEL.TFL%></h2>
+    </div>
+</div>
+<div id="article-content">
+    <table class="bordered">
+        <thead>
+        <tr>
+            <th class="width_40"><%= TEMPLATE.LABEL.TFLFD %></th>
+            <th class="width_60">(<span id="spantp"><%= TEMPLATE.LABEL.TFLTD %></span><span class="thead_hide" id="spantn"><%= TEMPLATE.LABEL.TFLTD %></span>)<%= TEMPLATE.LABEL.TFLFO %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="va-top">
+                <table class="table tree" id="tdirlist">
+                    <tr class="treegrid-1 treegrid_header">
+                        <td class="treegrid_td"><%= TEMPLATE.LABEL.TFLTD %></td>
+                    </tr>
+                    <tr class="treegrid-2 treegrid_header">
+                        <td class="treegrid_td"><%= TEMPLATE.LABEL.TFLRD %></td>
+                    </tr>
+                    <%-tgs%>
+                </table>
+            </td>
+            <td class="va-top">
+                <div class="ta-center">
+                    <a class="button default " href="#" id="btnUploadFile"><%=TEMPLATE.LABEL.UPLOADFILE%></a>
+                    <a class="button default " href="#" id="btnCreateFile"><%= TEMPLATE.LABEL.CREATEFILE %></a>
+                    <a class="button default bg-color-blue" href="#" id="btnRemaneDir"><%= TEMPLATE.LABEL.REMANEDIR %></a>
+                    <a class="button default bg-color-blue" href="#" id="btnDeleteDir"><%= TEMPLATE.LABEL.DELETEDIR %></a>
+                    <a class="button default bg-color-blue" href="#" id="btnCreateDir"><%= TEMPLATE.LABEL.CREATEDIR %></a>
+                </div>
+                <div class="fg-color-red" style="clear:both;">
+                    <span id="err_tips"></span>
+                </div>
+                <table class="bordered" id="tfilelist">
+                    <thead>
+                    <tr>
+                        <th><%= TEMPLATE.LABEL.FILELIST %></th>
+                        <th style="width:125px;"><%= COMMON.TITLE.OPERAT %></th>
+                    </tr>
+                    </thead>
+                    <tbody id="tfl">
+
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="hidden" name="cti" id="cti" value="1"/>
+    <input type="hidden" name="tk" id="tk" value="<%=smto.key%>"/>
+    <input type="hidden" name="maxid" id="maxid" value="<%=maxid%>"/>
+    <input type="hidden" name="maxidf" id="maxidf" value="1"/>
+    <input type="hidden" name="optf" id="optf" value="1"/>
+</div>
+<script>
+    $(function(){
+        $('#btnRemaneDir').hide();
+        $('#btnDeleteDir').hide();
+        $('#btnCreateDir').hide();
+        $('.tree').treegrid();
+        tdClick($(".treegrid-1"));
+    });
+    function loadExt(l,v){
+        for (i=0; i < l.length; i++){
+            var opt = $('<option />', {value: l[i],text: l[i]});
+            if (l[i] === v){
+                opt.attr('selected','selected');
+            }
+            opt.appendTo($("#ext"));
+        }
+    }
+    function getFullPath(t){
+        var p = "";
+        var id = $(t).treegrid('getNodeId');
+        if (id==='1' || id==='2'){
+            p = t.text();
+        }
+        while (id!='1' && id!='2')
+        {
+            id = $(t).treegrid('getParentNodeId');
+            p = "/"+t.text() + p;
+            t = $('.treegrid-'+id);
+        }
+        return p;
+    }
+    function tdClick(t){
+        var id = $(t).treegrid('getNodeId');
+        $('#cti').val(id);
+        $('#btnRemaneDir').show();
+        $('#btnDeleteDir').show();
+        $('#btnCreateDir').show();
+        $('#spantp').text(getFullPath(t));
+        $('#spantn').text(t.text());
+        var path = $('#spantp').text();
+        if (id === "1"){
+            $('#btnRemaneDir').hide();
+            $('#btnDeleteDir').hide();
+            $('#btnCreateDir').hide();
+            $('#spantp').text(t.text());
+            $('#spantn').text("1");
+            path = "1";
+        }
+        if (id === "2"){
+            $('#btnRemaneDir').hide();
+            $('#btnDeleteDir').hide();
+            $('#spantp').text(t.text());
+            $('#spantn').text("2");
+            path = "2";
+        }
+        $.ajax({
+            url:"/<%= CONST.SYSTEM.MPATH %>/filelist",
+            type:'POST',
+            data: {"key": $('#tk').val(),"path": path},
+            dataType:"json",
+            success:function(data) {
+                if (data.success){
+                    var s = "";
+                    $('#maxidf').val(data['files'].length);
+                    for(i=0; i<data['files'].length; i++) {
+                        if (i%2 == 0){
+                            s +='<tr class="td_one">'
+                        }else{
+                            s+='<tr class="td_two">'
+                        }
+                        s+='<td id="file'+i+'">'+data['files'][i]+'</td><td style="width:125px;"><a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditFile('+i+')"><%= COMMON.TITLE.EDIT %></a><a class="button default treegrid_button" href="javascript:btnDeleteFile('+i+');"><%= COMMON.TITLE.DELETE %></a></td></tr>'
+                    }
+                    $('#tfl').html(s);
+                } else {
+                    $('#err_tips')[0].innerHTML = data['tip'];
+                }
+            }
+        });
+    }
+    $('.tree tr').click(function(){
+        tdClick($(this));
+    });
+    $('#btnCreateDir').click(function(){
+        var dlg = $.Zebra_Dialog('<form id="formcreatedir"><label class="control-label" style="width:77px;float:left;margin-top: 5px;"><%=TEMPLATE.LABEL.DIRNAME%></label><div style="width:256px;float:left;"><div class="input-control text"><input type="text" id="name" name="name" placeholder="<%= TEMPLATE.LABEL.DIRNAME %>" VTypes="label:<%= TEMPLATE.LABEL.DIRNAME %>;required:true;tip:errtip_a"><button class="helper" tabindex="-1" type="button"></button><span id="errtip_a"></span></div></div><div class="fg-color-red" style="clear:both;"><span id="errtips"></span></div></form>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%= TEMPLATE.LABEL.CREATEDIR %>',
+            'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    if ($('#formcreatedir').checkFormEx()) {
+                        var pp = $('#spantp').text();
+                        if ($('#spantn').text() === "1"){
+                            pp = "1";
+                        }
+                        if ($('#spantn').text() === "2"){
+                            pp = "2";
+                        }
+                        $.ajax({
+                            url:"/<%= CONST.SYSTEM.MPATH %>/createdir",
+                            type:'POST',
+                            data: {"name": $('#name').val(),"parentpath": pp, "templatekey":$('#tk').val()},
+                            dataType:"json",
+                            success:function(data) {
+                                if (data.success){
+                                    var maxid=parseInt($('#maxid').val())+1;
+                                    $('#maxid').val(maxid);
+                                    var newobj = "<tr class='treegrid-"+maxid+" treegrid-parent-"+$('#cti').val()+"'><td class='treegrid_td'>"+$('#name').val()+"</td></tr>";
+                                    $(".treegrid-"+$('#cti').val()).after(newobj);
+                                    $('.tree').treegrid();
+                                    dlg.close();
+                                    $(".treegrid-"+maxid).bind("click",function(){
+                                        tdClick($(".treegrid-"+maxid));
+                                    });
+                                } else {
+                                    $('#errtips')[0].innerHTML = data['tip'];
+                                }
+                            }
+                        });
+                        return false;
+                    }else{
+                        return false;
+                    }
+                }}]
+        });
+        $(function(){$()["Input"]({initAll: true});});
+        $('#formcreatedir').checkForm();
+    });
+    $('#btnRemaneDir').click(function(){
+        var oldname = $('#spantn').text();
+        var dlg = $.Zebra_Dialog('<form id="formrenamedir"><label class="control-label" style="width:77px;float:left;margin-top: 5px;"><%=TEMPLATE.LABEL.DIRNAME%></label><div style="width:256px;float:left;"><div class="input-control text"><input type="text" id="name" name="name" placeholder="<%= TEMPLATE.LABEL.DIRNAME %>" VTypes="label:<%= TEMPLATE.LABEL.DIRNAME %>;required:true;tip:errtip_a"><button class="helper" tabindex="-1" type="button"></button><span id="errtip_a"></span></div></div><div class="fg-color-red" style="clear:both;"><span id="errtips"></span></div></form>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%= TEMPLATE.LABEL.REMANEDIR %>',
+            'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    if ($('#formcpwd').checkFormEx()) {
+                        var pp = $('#spantp').text();
+                        if ($('#spantn').text() === "1"){
+                            pp = "1";
+                        }
+                        if ($('#spantn').text() === "2"){
+                            pp = "2";
+                        }
+                        $.ajax({
+                            url:"/<%= CONST.SYSTEM.MPATH %>/renamedir",
+                            type:'POST',
+                            data: {"name": $('#name').val(),"oldname": oldname,"parentpath": pp, "templatekey":$('#tk').val()},
+                            dataType:"json",
+                            success:function(data) {
+                                if (data.success){
+                                    var n = '.treegrid-'+$('#cti').val();
+                                    $(n).html($(n).html().replace(oldname, $('#name').val()));
+                                    $('#spantp').text(data['url']);
+                                    $('#spantn').text($('#name').val());
+                                    $('.tree').treegrid();
+                                    dlg.close();
+                                } else {
+                                    $('#errtips')[0].innerHTML = data['tip'];
+                                }
+                            }
+                        });
+                        return false;
+                    }else{
+                        return false;
+                    }
+                }}]
+        });
+        $(function(){$()["Input"]({initAll: true});});
+        $('#formremanedir').checkForm();
+        $('#name').val($('#spantn').text());
+    });
+    $('#btnDeleteDir').click(function(){
+        var name = $('#spantn').text();
+        var dlg = $.Zebra_Dialog('<div class="div_title"><%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%></div>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type': 'question',
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%= TEMPLATE.LABEL.REMANEDIR %>',
+            'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    if ($('#formcpwd').checkFormEx()) {
+                        var pp = $('#spantp').text();
+                        if ($('#spantn').text() === "1"){
+                            pp = "1";
+                        }
+                        if ($('#spantn').text() === "2"){
+                            pp = "2";
+                        }
+                        $.ajax({
+                            url:"/<%= CONST.SYSTEM.MPATH %>/deletedir",
+                            type:'POST',
+                            data: {"path": pp,"key":$('#tk').val()},
+                            dataType:"json",
+                            success:function(data) {
+                                if (data.success){
+                                    $(".treegrid-"+$('#cti').val()).treegrid('removeRecursive');
+                                    tdClick($(".treegrid-1"));
+                                    dlg.close();
+                                } else {
+                                    $('#errtips')[0].innerHTML = data['tip'];
+                                }
+                            }
+                        });
+                        return false;
+                    }else{
+                        return false;
+                    }
+                }}]
+        });
+        $(function(){$()["Input"]({initAll: true});});
+        $('#formremanedir').checkForm();
+        $('#name').val($('#spantn').text());
+    });
+    function saveFile(){
+        var dlg = $.Zebra_Dialog('<form id="formcreatefile"><label class="control-label"><%=TEMPLATE.LABEL.FILENAME%></label><div><div class="input-control text" style="width:616px;float:left;"><input type="text" id="name" name="name" placeholder="<%= TEMPLATE.LABEL.FILENAME %>" VTypes="label:<%= TEMPLATE.LABEL.FILENAME %>;required:true;tip:errtip_a" style="width:616px;"><button class="helper" tabindex="-1" type="button"></button><span id="errtip_a"></span></div><div class="input-control select" style="width:150px;float:left;"><select id="ext" name="ext" style="margin-right: 0 !important;"></select></div></div><label class="control-label"><%=TEMPLATE.LABEL.FILECONTENT%></label><div class="input-control textarea"><textarea id="content" name="content" style="height:300px;" VTypes="label:<%= TEMPLATE.LABEL.FILECONTENT%>;required:true;tip:errtip_b"></textarea><span class="fg-color-red" id="errtip_b"></span></div></form>', {
+            'width': '800',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%= TEMPLATE.LABEL.CREATEFILE %>',
+            'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    if ($('#formcreatefile').checkFormEx()) {
+                        var pp = $('#spantp').text();
+                        if ($('#spantn').text() === "1"){
+                            pp = "1";
+                        }
+                        if ($('#spantn').text() === "2"){
+                            pp = "2";
+                        }
+                        $.ajax({
+                            url:"/<%= CONST.SYSTEM.MPATH %>/createfile",
+                            type:'POST',
+                            data: {name: $('#name').val()+$('#ext').val(),content: $('#content').val(),path: pp,key:$('#tk').val(),optf:$('#optf').val()},
+                            dataType:"json",
+                            success:function(data) {
+                                if (data.success){
+                                    if (optf==="1"){
+                                        var i = parseInt($('#maxidf').val());
+                                        var s = '';
+                                        if (i%2 == 0){
+                                            s +='<tr class="td_one">'
+                                        }else{
+                                            s+='<tr class="td_two">'
+                                        }
+                                        s += '<td id="file'+i+'">'+$('#name').val()+$('#ext').val()+'</td><td style="width:125px;"><a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditFile('+i+')"><%= COMMON.TITLE.EDIT %></a><a class="button default treegrid_button" href="javascript:btnDeleteFile('+i+');"><%= COMMON.TITLE.DELETE %></a></td></tr>'
+                                        $('#maxidf').val(++i);
+                                        $('#tfl').append(s);
+                                    }
+                                    dlg.close();
+                                } else {
+                                    $('#errtip_b')[0].innerHTML = data['tip'];
+                                }
+                            }
+                        });
+                        return false;
+                    }else{
+                        return false;
+                    }
+                }}]
+        });
+    }
+    $('#btnCreateFile').click(function(){
+        $('#optf').val(1);
+        saveFile();
+        $(function(){$()["Input"]({initAll: true});});
+        $('#formcreatefile').checkForm();
+        var extL = ['.ejs'];
+        if ($('#spantn').text() === "1"){
+            loadExt(extL, '.ejs');
+        }else{
+            extL = ['.js','.css'];
+            loadExt(extL, '.js');
+        }
+    });
+    function btnDeleteFile(i){
+        var name = $('#file'+i).text();
+        var pp = $('#spantp').text();
+        if ($('#spantn').text() === "1"){
+            pp = "";
+        }
+        if ($('#spantn').text() === "2"){
+            pp = "";
+        }
+        var path = pp;
+        var templatekey = $('#tk').val();
+        $.Zebra_Dialog('<%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%>', {
+            'type': 'question'
+            ,'auto_close':false,'show_close_button':false,
+            'overlay_close':false,'width': '400'
+            ,'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/deletefile",
+                        type:'POST',
+                        data: {name: name,path:path,templatekey:templatekey,templatetype:$('#spantn').text()},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                $($('#file'+i).parent()).remove()
+                            } else {
+                                $('#errtips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+                }}]
+        });
+    };
+    function btnEditFile(i){
+        $('#optf').val(2);
+        var name = $('#file'+i).text();
+        var pp = $('#spantp').text();
+        if ($('#spantn').text() === "1"){
+            pp = "";
+        }
+        if ($('#spantn').text() === "2"){
+            pp = "";
+        }
+        var path = pp;
+        var key = $('#tk').val();
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/readfile",
+                        type:'POST',
+                        data: {name: name,path:path,key:key,type:$('#spantn').text(),optf:$('#optf').val()},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                saveFile();
+                                $(function(){$()["Input"]({initAll: true});});
+                                $('#formcreatefile').checkForm();
+                                var extL = ['.ejs'];
+                                var tt = name.split('.');
+                                $('#name').val(tt[0]);
+                                $('#content').val(data['url']);
+                                if ($('#spantn').text() === "1"){
+                                    loadExt(extL, '.ejs');
+                                }else{
+                                    extL = ['.js','.css'];
+                                    loadExt(extL, '.'+tt[1]);
+                                }
+                            } else {
+                                $('#errtips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+    };
+    $('#btnUploadFile').click(function(){
+        var dlg = $.Zebra_Dialog('<form id="formuploadfile"><div id="filequeue"></div><a id="btnCancel" href="#" class="button default float-right "><%=COMMON.TITLE.CANCEL%></a><a id="btnUpload" href="javascript:$(\'#btnSelect\').uploadifive(\'upload\')" class="button default float-right "><%=TEMPLATE.LABEL.UPLOAD%></a><input id="btnSelect" name="btnSelect" type="button"></form>', {
+            'width': '400',
+            'auto_close':false,
+            'overlay_close':false,
+            'type':false,
+            'modal':true,
+            'show_close_button':false,
+            'title':'<%=TEMPLATE.LABEL.UPLOADFILE%>',
+            'buttons':false
+        });
+        $('#btnCancel').click(function(){
+            dlg.close();
+        });
+        var pp = $('#spantp').text();
+        if ($('#spantn').text() === "1"){
+            pp = "";
+        }
+        if ($('#spantn').text() === "2"){
+            pp = "";
+        }
+        var path = pp;
+        $('#btnSelect').uploadifive({
+            'buttonText':'<%=COMMON.TITLE.SELECT%>',
+            'auto':false,
+            'height':'32',
+            'formData':{action:"UploadResource",path:path,key:$('#tk').val(),type:$('#spantn').text()},
+            'multi':true,
+            'queueID':'filequeue',
+            'uploadScript':"/<%= CONST.SYSTEM.MPATH %>/upload",
+            'onUploadComplete': function(file, data) {
+                if ($('#tfilelist').html().indexOf(file.name)==-1){
+                    var i = parseInt($('#maxidf').val());
+                    var s = '';
+                    if (i%2 == 0){
+                        s +='<tr class="td_one">'
+                    }else{
+                        s+='<tr class="td_two">'
+                    }
+                    s += '<td id="file'+i+'">'+file.name+'</td><td style="width:125px;"><a class="button default treegrid_button" style="margin-right: 5px !important;" href="javascript:btnEditFile('+i+')"><%= COMMON.TITLE.EDIT %></a><a class="button default treegrid_button" href="javascript:btnDeleteFile('+i+');"><%= COMMON.TITLE.DELETE %></a></td></tr>'
+                    $('#maxidf').val(++i);
+                    $('#tfl').append(s);
+                }
+            }
+        });
+    });
+</script>

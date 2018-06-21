@@ -1,0 +1,82 @@
+<%- include header %>
+    <header id="gtco-header" class="gtco-cover gtco-cover-xs" role="banner" style="background-image:url(/<%=CONST.SYSTEM.THEME%>/images/bg01.jpg);">
+        <div class="overlay"></div>
+        <div class="gtco-container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="display-t">
+                        <div class="display-tc">
+                            <h1 class="animate-box" data-animate-effect="fadeInUp">成功案例</h1>
+                            <h2 class="animate-box" data-animate-effect="fadeInUp">Successful Cses</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+<div id="gtco-section" class="gtco-section">
+		<div class="gtco-container">
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+					<h2>成功案例</h2>
+					<p>专业的项目管理体系，灵活的市场营销策略，雄厚的技术实力和规范的售后服务。
+</p>
+				</div>
+			</div>
+
+			<div class="fh5co-blog-style-1">
+				<div class="row p-b">
+					<% for(var i=0; i<pageCount; i++) {%>
+						<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+							<div class="fh5co-post animate-box fadeInLeft"  data-animate-effect="fadeIn">
+								<div class="fh5co-post-image">
+									<img src="<%-smal[i].aurl%>" class="img-responsive">
+								</div>
+								<div class="fh5co-post-text">
+									<h3><a href="/article/<%=smal[i].atype%>/<%=smal[i]._id%>"><%=smal[i].title%></a></h3>
+									<p><%=smal[i].description%></p>
+								</div>
+								<div class="fh5co-post-meta">
+									<a href="#"><i class="icon-clock2"></i> <%=smal[i].pdate%> </a>
+								</div>
+							</div>
+						</div>
+					<% } %>	
+				</div>
+			</div>
+
+
+				<div class="yema_box">
+		            <% if(!isFirstPage){ %>
+		                 <a href="javascript:listload(parseInt($('#pn').val())-1);" style="clear:both;float: none;">上一页</a>
+		            <% } %>
+		            <%- footinfo%>
+		            <% if(!isLastPage){ %>
+		                 <a href="javascript:listload(parseInt($('#pn').val())+1);" style="clear:both;float: none;">下一页</a>
+		            <% } %>
+		        </div>
+
+
+	</div>
+		</div>
+	</div>
+
+    <script>
+        var pc = 10;
+        var pages=<%=pages%>;
+        var pageCount=<%=pageCount%>;
+        function listload(pn) {
+            window.location.href = '<%= surl %>' + pn;
+        }
+        $(document).ready(function () {
+            $('#pn').bind('keypress',function(event){
+                if(event.keyCode == "13"){
+                    if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                        listload($('#pn').val());
+                    }
+                }
+            });
+        });
+    </script>
+<%- include footer %>

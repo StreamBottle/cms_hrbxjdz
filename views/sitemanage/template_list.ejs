@@ -1,0 +1,153 @@
+<form action='/<%= CONST.SYSTEM.MPATH %>/templateadd' method='post' id='formtemplate'>
+    <table class="bordered hovered" id="ttemplatelist">
+        <thead>
+        <tr>
+            <th class="thead_hide"></th>
+            <th><%= TEMPLATE.LABEL.NAME %></th>
+            <th><%= TEMPLATE.LABEL.KEY %></th>
+            <th><%= TEMPLATE.LABEL.ISUSE %></th>
+            <th style="width:176px;"><%= COMMON.TITLE.OPERAT %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<pageCount; i++) {
+                if (i%2 == 0){%>
+        <tr class="td_one" id="tr<%=i%>">
+            <%}else{%>
+        <tr class="td_two" id="tr<%=i%>">
+            <%}%>
+            <td class="thead_hide" id="id<%=i%>"><%=smtl[i]._id%></td>
+            <td id="name<%=i%>"><%=smtl[i].name%></td>
+            <td id="key<%=i%>"><%=smtl[i].key%></td>
+            <td id="isuse<%=i%>"><%=smtl[i].isuse==1?'是':'否'%></td>
+            <td style="width:176px;">
+                <a class="button default treegrid_button" href="javascript:btnEditClick('<%=i%>')"><%= COMMON.TITLE.EDIT %></a>
+                <a class="button default treegrid_button" href="javascript:btnDelClick('<%=i%>');"><%= COMMON.TITLE.DELETE %></a>
+                <a class="button default treegrid_button" href="javascript:btnManageClick('<%=i%>');"><%= COMMON.TITLE.MANAGE %></a>
+            </td>
+        </tr>
+        <% } %>
+        <input type="hidden" name="opt" id="opt" value="1"/>
+        <input type="hidden" name="id" id="id" value=""/>
+        </tbody>
+        <tfoot>
+        <tr class="error">
+            <td  colspan="6" class="sanpo-tgridtd">
+                <% if(!isFirstPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())-1);"><%= COMMON.TITLE.PREVIOUS %></a>
+                <% } %>
+                <%- footinfo%>
+                <% if(!isLastPage){ %>
+                <a href="javascript:listload($('#findvalue').val(), parseInt($('#pn').val())+1);"><%= COMMON.TITLE.NEXT %></a>
+                <% } %>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</form>
+<script>
+    var bshow = false;
+    var tobj;
+    var newobj;
+    var pages=<%=pages%>;
+    $(function () {
+        newobj = "<tr id='newobj'><td><div class='input-control text'><input id='name' name='name' type='text' placeholder='<%= TEMPLATE.LABEL.NAME %>' VTypes='label:<%= TEMPLATE.LABEL.NAME %>;required:true;tip:errtip_a'><button class='helper' tabindex='-1' type='button'></button><span class='fg-color-red' id='errtip_a'></span></div></td><td><div class='input-control text'><input id='key' name='key' type='text' placeholder='<%= TEMPLATE.LABEL.KEY %>' VTypes='label:<%= TEMPLATE.LABEL.KEY %>;required:true;tip:errtip_b'><button class='helper' tabindex='-1' type='button'></button><span class='fg-color-red' id='errtip_b'></span></div></td><td><label class='input-control switch' onclick=''><input type='checkbox' name='isuse' id='isuse'><span class='helper'></span></label></td><td><a class='button default treegrid_button' style='margin-right: 10px !important;' href='javascript:btnSaveClick();'><%= COMMON.TITLE.SAVE %></a><a class='button default treegrid_button' href='javascript:btnCancelClick();'><%= COMMON.TITLE.CANCEL %></a></td></tr>";
+    })
+    $(document).ready(function () {
+        $('#pn').bind('keypress',function(event){
+            if(event.keyCode == "13"){
+                if (parseInt($('#pn').val())>0 && parseInt($('#pn').val()) <= parseInt(pages)){
+                    listload($('#findvalue').val(), $('#pn').val());
+                }
+            }
+        });
+        $('#btnAddTemplate').click(function(){
+            if (bshow){
+                btnCancelClick();
+            }
+            $("#opt").val("1");
+            bshow = true;
+            $('#opt').before(newobj);
+            $()['Input']({initAll: true});
+            $('#formtemplate').checkForm();
+        });
+    });
+    function btnManageClick(i){
+        loadArticle('/<%= CONST.SYSTEM.MPATH %>/fmpanel/'+$('#key'+i).text());
+    }
+    function btnEditClick(i){
+        if (bshow){
+            btnCancelClick();
+        }
+        tobj = $('#tr'+i);
+        var id = $('#id'+i).text();
+        var name = $('#name'+i).text();
+        var key = $('#key'+i).text();
+        var isuse = $('#isuse'+i).text();
+        $('#tr'+i).replaceWith(newobj);
+        bshow = true;
+        $('#id').val(id);
+        $("#opt").val("2");
+        $('#name').val(name);
+        $('#key').val(key);
+        isuse=='是'?$('#isuse').attr("checked",true):$('#isuse').attr("checked",false);
+        $()['Input']({initAll: true});
+        $('#formtemplate').checkForm();
+    }
+    function btnDelClick(i){
+        var id = $('#id'+i).text();
+        var name = $('#name'+i).text();
+        $.Zebra_Dialog('<%=COMMON.TITLE.QDELETEL%>'+name+'<%=COMMON.TITLE.QDELETER%>', {
+            'type': 'question'
+            ,'auto_close':false,'show_close_button':false,
+            'overlay_close':false,
+            'width': '400'
+            ,'buttons':[{caption: '<%=COMMON.TITLE.CANCEL%>'},
+                {caption: '<%=COMMON.TITLE.OK%>', callback: function(){
+                    $.ajax({
+                        url:"/<%= CONST.SYSTEM.MPATH %>/templatedel",
+                        type:'POST',
+                        data: {"did": id, "key":$('#key'+i).text()},
+                        dataType:"json",
+                        success:function(data) {
+                            if (data.success){
+                                loadArticle(data['url'], data['isRedirect']);
+                            } else {
+                                $('#err_tips')[0].innerHTML = data['tip'];
+                            }
+                        }
+                    });
+                }}]
+        });
+    }
+    function btnCancelClick() {
+        bshow = false;
+        if ($("#opt").val()=="1"){
+            $('#newobj').remove();
+        }else{
+            $('#newobj').replaceWith(tobj);
+        }
+    }
+    function btnSaveClick() {
+        $('#formtemplate').submit();
+    }
+    $('#formtemplate').ajaxForm({
+        dataType: 'json'
+        ,beforeSubmit: beforesubmitopt
+        ,success: successopt
+    });
+    function beforesubmitopt() {
+        if ($('#formtemplate').checkFormEx()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function successopt(data) {
+        if (data['success']) {
+            loadArticle(data['url'], data['isRedirect']);
+        } else {
+            $('#err_tips')[0].innerHTML = data['tip'];
+        }
+    }
+</script>

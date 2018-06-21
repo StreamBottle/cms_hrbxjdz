@@ -1,0 +1,39 @@
+<div id="article-header">
+    <div class="butleft" style="margin-top:7px"><label><%= ARTICLE.LABEL.CHANNEL %></label></div>
+    <div class="float-left"><div class="input-control select" style="width:200px;margin-right:10px;"><select id="achannel">
+        <%for (i=0; i<atype.length; i++){if (atype[i].key === currentc){%>
+                <option value="<%=atype[i].key%>" selected=""><%=atype[i].name%></option>
+        <% }else{%>
+                <option value="<%=atype[i].key%>"><%=atype[i].name%></option>
+        <%}}%>
+    </select></div></div>
+    <div class="float-left"><a class="button default" href="#" id="btnAddArticle"> <%= ARTICLE.LABEL.ADD %></a></div>
+    <div class="fg-color-red" style="clear:none;float:left;margin-top: 6px;">
+        <span id="err_tips"></span>
+    </div>
+    <div class="input-control text">
+        <input type="text" id="findvalue" placeholder="<%= ARTICLE.LABEL.SEARCH %>">
+        <button class="btn-search"></button>
+    </div>
+</div>
+<div id="article-content">
+</div>
+<script>
+    var pc = 10;
+    function listload(q, pn) {
+        if (q == '') {
+            $("#article-content").load('/<%= CONST.SYSTEM.MPATH %>/smalskip?pn=' + pn + '&pc=' + pc + '&achannel=' + $('#achannel').val());
+        } else {
+            $("#article-content").load('/<%= CONST.SYSTEM.MPATH %>/smalskip?pn=' + pn + '&pc=' + pc + '&q=' + encodeURIComponent(q) + '&achannel=' +  + $('#achannel').val());
+        }
+    }
+    $(".btn-search").click(function() {
+        listload($('#findvalue').val(), 1);
+    });
+    $(document).ready(function () {
+        listload('', 1);
+    });
+    $("#achannel").change(function(){
+        listload($('#findvalue').val(), 1);
+    })
+</script>

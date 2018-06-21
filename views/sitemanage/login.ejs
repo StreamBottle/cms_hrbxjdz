@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <%- include head %>
+    <title><%= SITE.NAME %> -- <%= SITE.DESCRIPTION %></title>
+</head>
+<body class="login_body">
+<div class="login-panel">
+    <h2><%= SITE.NAME %><%= SITE.DESCRIPTION %></h2>
+    <div class="dlogo">
+        <img src="/mpublic/imgs/54cms_icon.png">
+    </div>
+    <div class="dlogin">
+        <form class="login-form" id="login-form" action="/<%= CONST.SYSTEM.MPATH %>/login" method="post">
+            <div class="icon-wrapper"><i class="icon-user"></i></div>
+            <div class="input-control text">
+                <input type="text" id="account" name="account" placeholder="<%= AUTH.TIP.USERNAME %>" VTypes="label:<%= AUTH.TIP.USERNAME %>;required:true;tip:errtip_a">
+                <button class="helper" tabindex="-1" type="button"></button>
+                <span id="errtip_a"></span>
+            </div>
+            <div class="icon-wrapper"><i class="icon-locked-2"></i></div>
+            <div class="input-control password">
+                <input type="password" id="password" name="password" placeholder="<%= AUTH.TIP.PASSWORD %>" VTypes="label:<%= AUTH.TIP.PASSWORD %>;required:true;tip:errtip_p">
+                <button class="helper" tabindex="-1" type="button"></button>
+                <span id="errtip_p"></span>
+            </div>
+        </form>
+        <a class="button bg-color-orangeDark default" id="login_button"><%= AUTH.BUTTON.LOGIN %></a>
+        <div class="derror">
+            <span id="err_tips"></span>
+        </div>
+    </div>
+</div>
+<div class="login-footer"><%- SITE.COPYRIGHT %></div>
+<script>
+    if (window.top != self){
+        window.top.location = self.location;
+    }
+    $(document).ready(function(){
+        $('#login-form').checkForm();
+    });
+    $("#login_button").click(function() {
+        $('#login-form').submit();
+    });
+    $('#login-form').ajaxForm({
+        dataType: 'json'
+        ,beforeSubmit: beforesubmitopt
+        ,success: successopt
+    });
+    function beforesubmitopt() {
+        if ($('#login-form').checkFormEx()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function successopt(data) {
+        if (data['success']) {
+            loadArticle(data['url'], data['isRedirect']);
+        } else {
+            $('#err_tips')[0].innerHTML = data['tip'];
+        }
+    }
+</script>
+</body>
+</html>
